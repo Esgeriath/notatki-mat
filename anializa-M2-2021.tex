@@ -1,0 +1,576 @@
+\documentclass[a4paper, 12pt]{mwart}
+
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[top = 2.5cm, bottom = 2.5cm, left = 2.5cm, right = 2.5cm]{geometry}
+
+\usepackage{enumitem}
+\usepackage{amsmath, amsfonts, amssymb, mathtools, amsthm}
+\mathtoolsset{showonlyrefs}
+
+\theoremstyle{definition}
+\newtheorem{definicja}{Def}[section]
+\theoremstyle{plain}
+\newtheorem{twierdzenie}{TW}[section]
+\theoremstyle{remark}
+\newtheorem{wniosek}{Wniosek}[section]
+
+% całki górna i dolna
+\newcommand{\upint}[2]{
+	\overline{\int_{#1}^{#2}}
+}
+\newcommand{\loint}[2]{
+	\underline{\int_{#1}^{#2}}
+}
+
+% basically enumereate, ale z większą interlinią
+\newenvironment{wide_enum}{
+	\vspace{3pt}
+	\begin{enumerate}
+		\setlength{\itemsep}{5pt}
+		\setlength{\parskip}{0pt}
+		\setlength{\parsep}{0pt}
+}{\end{enumerate}}
+\newenvironment{wide_enum_resume}{
+	\vspace{3pt}
+	\begin{enumerate}[resume]
+		\setlength{\itemsep}{5pt}
+		\setlength{\parskip}{0pt}
+		\setlength{\parsep}{0pt}
+	}{\end{enumerate}}
+
+%strona tytułowa
+\author{skryba Łukasz Pawlak}
+\title{Definicje i Twierdzenia z Analizy Matematycznej M2}
+\date{Wykłady w roku 2021 \\ ostatnia kompilacja \today}
+
+
+\begin{document}
+\maketitle
+
+\section{Całka jako miara pola}
+\begin{definicja}
+	\emph{Miarą wewnętrzną Jordana} zbioru $F$ nazywamy  wielkość $\mu_*(F)$, określoną jako kres górny zbioru sum pól prostokątów zawartych w~$F$.
+\end{definicja}
+\begin{definicja}
+	\emph{Miarą zewnętrzną Jordana} zbioru $F$ nazywamy  wielkość $\mu^*(F)$, określoną jako kres dolny zbioru sum pól prostokątów mających część wspólną z~$F$.
+\end{definicja}
+Jeśli $\mu^*(F) = \mu_*(F)$, to $F$ nazywamy mierzalnym w sensie Jordana.
+\begin{twierdzenie}
+	Dla dowolnego zbioru $F$ zachodzi
+	$\mu_*(F) \leq \mu^*(F)$
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeżeli $F_1$ i $F_2$ są mierzalne w~sensie Jordana, to
+	$F_1\cup F_2, F_1\cap F_2, F_1\setminus F_2$
+	są mierzalne w sensie Jordana. 
+\end{twierdzenie}
+\subsection{Całka Darboux}
+\begin{definicja}
+	\emph{Podziałem} przedziału $[a, b]$ nazywamy dowolny skończony zbiór $P = \left\{x_0, x_1, x_2, \ldots ,x_n\right\}$ spełniający
+	\begin{equation}
+		a = x_0 \leq x_1 \leq x_2 \leq \ldots \leq x_n = b
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Średnicą podziału} $P$ nazywamy liczbę $\delta (P) = \max \left\{x_i - x_{i - 1} : i \in [n]\right\}$
+\end{definicja}
+\begin{definicja}
+	\emph{Sumą dolną} (całkową) funkcji $f$ przy podziale $P$ nazywamy wartość
+	\begin{equation}
+		S_*(f, P) = \sum_{i = 1}^n (x_i - x_{i - 1}) \cdot \inf\left\{f(x) : x \in [x_{i - 1}, x_i]\right\}
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Sumą górną} (całkową) funkcji $f$ przy podziale $P$ nazywamy wartość
+	\begin{equation}
+		S^*(f, P) = \sum_{i = 1}^n (x_i - x_{i - 1}) \cdot \sup\left\{f(x) : x \in [x_{i - 1}, x_i]\right\}
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Całką dolną Darboux} funkcji $f$ na przedziale $[a, b]$ nazywamy kres górny zbioru liczb $S_*(f, P)$, gdzie $P$ jest dowolnym podziałem przedziału $[a, b]$:
+	\begin{equation}
+		\loint{a}{b} f = \sup\left\{S_*(f, P): P \text{\ppauza podział } [a, b]\right\}.
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Całką górną Darboux} funkcji $f$ na przedziale $[a, b]$ nazywamy kres dolny zbioru liczb $S^*(f, P)$, gdzie $P$ jest dowolnym podziałem przedziału $[a, b]$:
+	\begin{equation}
+		\upint{a}{b} f = \inf\left\{S^*(f, P): P \text{\ppauza podział } [a, b]\right\}.
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	Jeśli całki dolna i górna są sobie równe, to ich wspólną wartość nazywamy \emph{całką Darboux} i oznaczamy
+	\begin{equation}
+		\int_a^b f = \loint{a}{b} f = \upint{a}{b} f.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Dla dowolnych funkcji $f$, przedziału $[a, b]$ oraz podziału$P$ tego przedziału zachodzą następujące dwie nierówności:
+	\begin{equation}
+		\begin{aligned}
+			S_*(f, P) &\leq S^*(f, P), \\
+			\loint{a}{b} f &\leq \upint{a}{b} f.
+		\end{aligned}
+	\end{equation}
+	Przy okazji dowodu tego twierdzenia, pokazaliśmy, że jeśli $P \subseteq \widetilde{P}$ (mówimy, że $\widetilde{P}$ jest \emph{rozdrobnieniem} $P$) to
+	\begin{equation}
+		S_*(f, P) \leq S_*(f, \widetilde{P}) \leq S^*(f, \widetilde{P}) \leq S^*(f, P)
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Funkcje ciągłe są całkowalne w sensie Darboux.
+\end{twierdzenie}
+\begin{twierdzenie}[Zasadnicze twierdzenie rachunku całkowego; twierdzenie Newtona-Leibniza]
+	Niech $f$ będzie całkowalna w sensie Darboux na przedziale $[a, b]$ i niech
+	\begin{equation}
+		F(x) = \int_a^x f.
+	\end{equation}
+	($F$ jest tzw. \emph{funkcją z argumentem w górnej granicy całkowania})
+	Wtedy $F$ jest dobrze określona i~różniczkowalna, oraz zachodzi
+	\begin{equation}
+		F'(x) = f(x).
+	\end{equation}
+	Wnioskujemy, że każda funkcja ciągła ma funkcję pierwotną.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli dla dowolnego $x \in [a, b]$ zachodzi $c \leq f(x) \leq d$, to $c(b-a) \leq \int_a^b f \leq d(b-a)$.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $a < b < c$ oraz $f$ jest całkowalna w sensie Darboux na $[a, c]$, to $f$ jest także całkowalna na $[a, b]$ i na $[b, c]$, oraz
+	\begin{equation}
+		\int_a^c f = \int_a^b f + \int_b^c f.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $f$ jest całkowalna na przedziale $[a, b]$ oraz $(P_n)$ jest ciągiem podziałów $[a, b]$ takim, że $\lim\limits_{n \to\infty}\delta(P_n) = 0$, to
+	\begin{equation}
+		\lim_{n \to\infty} S^*(f, P_n) = \lim_{n \to\infty} S_*(f, P_n) = \int_a^b f.
+	\end{equation}
+\end{twierdzenie}
+\subsection{Całka Riemanna}
+\begin{definicja}
+	Podział $P = \left\{x_0, x_1, x_2, \ldots, x_n\right\}$ oraz punkty $\tilde{x}_i \in [x_{i-1}, x_i]$ nazywamy \emph{podziałem z punktami pośrednimi}. Określamy \emph{sumę całkową Riemanna} względem takiego podziału jako
+	\begin{equation}
+		S(f, P) = \sum_{i = 1}^n f(\tilde{x}_i) \cdot (x_i - x_{i-1}).
+	\end{equation}
+	Jeśli dla dowolnego ciągu podziałów z punktami pośrednimi $(P_k)$ takiego, że
+	\begin{equation}
+		\lim_{n \to\infty}\delta(P_n) = 0
+	\end{equation} ciąg $(S(f, P_n))$ jest zbieżny i wartość granicy nie zależy od wyboru ciągu $(P_k)$, to wartość tej granicy nazywamy \emph{całką Riemanna} funkcji f na przedziale $[a, b]$, a f nazywamy \emph{całkowalną w sensie Riemanna}.
+\end{definicja}
+\begin{twierdzenie}
+	Funkcja $f$ jest całkowalna na $[a, b]$ w sensie Darboux wtedy i tylko wtedy gdy jest całkowalna na $[a, b]$ w sensie Riemanna. Zawsze gdy istnieje jedna z nich, to istnieje druga i są sobie równe.
+\end{twierdzenie}
+\vspace{20px}
+{\bf Własności całki Riemanna (Darboux):}
+\begin{wide_enum}
+	\item $\int_a^b f + g = \int_a^b f + \int_a^b g$ (o ile obie całki $\int_a^b f$, $\int_a^b g$ istnieją);
+	\item  $\int_a^b c\cdot f = c \cdot\int_a^b f$, dla dowolnego $c \in\mathbb{R}$, o ile $\int_a^b f$ istnieje;
+	\item  $\int_a^b f \leq (b-a) \cdot\sup\left\{f(x) : x \in [a, b]\right\}$.
+\end{wide_enum}
+\vspace{20px}
+\begin{twierdzenie}[Lebesgue]
+	Funkcja $f$ jest całkowalna w sensie Riemanna wtedy i tylko wtedy, gdy jest ograniczona oraz jej zbiór punktów nieciągłości ma miarę Lebesgue'a równą zero.
+\end{twierdzenie}
+\vspace{20px}
+Odtąd całkę Riemanna i Darboux będziemy oznaczać jak całkę oznaczoną.
+\vspace{20px}
+\subsection{Całka Riemanna\dywiz Stieltjesa}
+\begin{definicja}
+	% Uwaga!! To może być źle. W notatkach mam, że jeśli granica istnieje to już jest niezależna od wyboru ciągu (P_k).
+	Niech $f(t)$ i $g(t)$ będą funkcjami ograniczonymi na $[a, b]$. Niech $P = \left\{t_0, t_1, t_2, \ldots, t_n\right\}$ będzie podziałem $[a, b]$ z punktami pośrednimi $\tilde{t}_i\in [t_{i-1}, t_i]$. Określamy \emph{sumę całkową}
+	\begin{equation}
+		S(f, g, P) = \sum_{i=1}^n f(\tilde{t}_i)\cdot \left(g(t_i) - g(t_{i-1})\right).
+	\end{equation}
+	Jeśli dla dowolnie wybranego ciągu podziałów z punktami pośrednimi $(P_k)$ odcinka $[a, b]$ o średnicach $\delta(P_k)$ zbieżnych do zera istnieje granice ciągu $(S(f, g, P_k))$ i jest ona niezależna od wyboru ciągu $(P_k)$, to granicę tę nazywamy \emph{całką Riemanna\dywiz Stieltjesa} funkcji $f$~względem $g$~i~oznaczamy
+	\begin{equation}
+		\int_a^b f(x)\operatorname{d}\!g(x) = \lim_{k\to\infty} S(f, g, P_k).
+	\end{equation}
+\end{definicja}
+\vspace{20px}
+{\bf Własności całki Riemanna\dywiz Stieltjesa:} (o ile istnieją obie strony\ldots) \\
+Dwuliniowość:
+\begin{wide_enum}
+	\item $\int_a^b (f_1(x) + f_2(x))\operatorname{d}\!g(x) = \int_a^b f_1(x)\operatorname{d}\!g(x) + \int_a^b f_2(x)\operatorname{d}\!g(x)$,
+	\item  $\int_a^b c\cdot f(x)\operatorname{d}\!g(x) = c \cdot\int_a^b f(x)\operatorname{d}\!g(x)$, dla dowolnego $c \in\mathbb{R}$,
+	\item $\int_a^b f(x)\operatorname{d}(g_1(x) + g_2(x)) = \int_a^b f(x)\operatorname{d}\!g_1(x) + \int_a^b f(x)\operatorname{d}\!g_2(x)$,
+	\item  $\int_a^b f(x)\operatorname{d}(c\cdot g(x)) = c \cdot\int_a^b f(x)\operatorname{d}\!g(x)$, dla dowolnego $c \in\mathbb{R}$.
+\end{wide_enum}
+Całkowanie przez części i podstawienie:
+\begin{wide_enum} % tu miło być [resume], ale szkoda czasu żeby to rozkminiać w tej chwili
+	\item $\int_a^b f(x)\operatorname{d}\!g(x) = f(b)g(b) - f(a)g(a) - \int_a^b g(x)\operatorname{d}\!f(x)$,
+	\item $\int_a^b f(h(t))\operatorname{d}\!g(h(t)) = \int_{h(a)}^{h(b)} f(x)\operatorname{d}\!g(x)$,
+	\item $\int_a^b f(x)g(x)\operatorname{d}\!h(x) = \int_a^b f(x)\operatorname{d}\!G(x)$, gdzie $\operatorname{d}\!G(x) = g(x)\operatorname{d}\!h(x)$, t.j $G(x) = \int g(x)\operatorname{d}\!h(x)$
+\end{wide_enum}
+\vspace{20px}
+\begin{twierdzenie}
+	Jeśli $g$ ma ciągłą pochodną na $[a, b]$, zaś $f$ jest całkowalna w sensie Riemanna na $[a, b]$, to
+	\begin{equation}
+		\int_a^b f(x)\operatorname{d}\!g(x) = \int_a^b f(x)g'(x)\operatorname{d}\!x
+	\end{equation}
+	i obie te całki istnieją.
+\end{twierdzenie}
+%Metoda obliczania całki Riemanna\dywiz Stieltjesa
+\begin{twierdzenie}
+	Jeśli $f$ jest ciągła w $t_0\in [a, b]$, $\int_a^b f(x)\operatorname{d}\!g(x)$ istnieje oraz $g$ ma granice jednostronne w $t_0$ to
+	\begin{equation}
+		\begin{aligned}
+			\int_a^b f(x)\operatorname{d}\!g(x)
+			&= \int_a^{t_0} f(x)\operatorname{d}\!g(x) + \int_{t_0}^b f(x)\operatorname{d}\!g(x) \\
+			&\overset{*}{=} \int_a^{t_0} f(x)\operatorname{d}\!g_1(x) + f(t_0)\cdot\Delta g(t_0) + \int_{t_0}^b f(x)\operatorname{d}\!g_2(x) \\
+		\end{aligned}
+	\end{equation}
+	gdzie
+	\begin{equation}
+		\begin{gathered}
+			g_1(t) = \begin{cases}
+				\begin{aligned}
+					g(t) \phantom{li}&: t < t_0 \\
+					\lim\limits_{t\to t_0^-} g(t) &: t = t_0
+				\end{aligned}
+			\end{cases}
+		\!, \quad
+			g_2(t) = \begin{cases}
+				\begin{aligned}
+					g(t) \phantom{li}&: t > t_0 \\
+					\lim\limits_{t\to t_0^+} g(t) &: t = t_0
+				\end{aligned}
+			\end{cases}
+		\end{gathered}
+	\end{equation}
+	oraz
+	\begin{equation}
+		\Delta g(t_0) = \begin{cases}
+			\begin{aligned}
+				\lim\limits_{t\to t_0^+} g(t) &- \lim\limits_{t\to t_0^-} g(t) &&: t_0\in (a, b), \\
+				\lim\limits_{t\to t_0^+} g(t) &- g(a) &&: t_0 = a, \\
+				g(b) &- \lim\limits_{t\to t_0^-} g(t) &&: t_0 = b.
+			\end{aligned}
+		\end{cases}
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	\emph{Wahaniem całkowitym} funkcji $f$ na przedziale $[a, b]$ nazywamy kres górny zbiorów postaci
+	\begin{equation}
+		\sum_{i = 1}^n |f(t_i) - f(t_{i-1})|,
+	\end{equation}
+	gdzie $P = \left\{t_0, t_1, t_2, \ldots, t_n\right\}$ jest podziałem $[a, b]$.
+	Wartość wahania oznaczamy jako
+	\begin{equation}
+		V(f, [a, b]) = \sup\left\{\sum_{i = 1}^n |f(t_i) - f(t_{i-1})| : P \text{\ppauza podział} [a, b]\right\}
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli $f$ i $g$ mają skończone wahanie na $[a, b]$ i nie mają wspólnych punktów nieciągłości, to $\int_a^b f(x)\operatorname{d}\!g(x)$ istnieje.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $f$ jest ciągła na $[a, b]$ i $g$ ma skończone wahanie na $[a, b]$, to $\int_a^b f(x)\operatorname{d}\!g(x)$ istnieje.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Funkcja $f:[a, b] \to\mathbb{R}$ ma skończone wahanie wtedy i tylko wtedy, gdy jest różnicą funkcji niemalejących:
+	\begin{equation}
+		\begin{gathered}
+			f(t) = f_+(t) - f_-(t), \quad \text{gdzie} \quad
+		\end{gathered}
+		\begin{aligned}
+			f_+(t) &= \frac{1}{2}\left(V(f, [a, t]) + f(t)\right), \\
+			f_-(t) &= \frac{1}{2}\left(V(f, [a, t]) - f(t)\right).
+		\end{aligned}
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $f$ ma ciągła pochodną na $[a, b]$, to
+	\begin{equation}
+		V(f, [a, b]) = \int_a^b |f'(x)|\operatorname{d}\!x.
+	\end{equation}
+\end{twierdzenie}
+
+\section{Szeregi}
+\begin{definicja}
+	\emph{Szereg liczbowy} o wyrazach $(a_n)$ \ppauza oznaczany symbolem $\sum a_n$ \ppauza to ciąg sum częściowych
+	\begin{equation}
+		S_n = \sum_{i = 1}^n a_n.
+	\end{equation}
+	Jeśli szereg jest zbieżny, to jego granicę nazywamy \emph{sumą szeregu} $\sum a_n$ i oznaczamy
+	\begin{equation}
+		\sum_{n=1}^\infty a_n = \lim_{n\to\infty} S_n.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Szereg $\sum a_n$ jest zbieżny wtedy i tylko wtedy, gdy spełniny jest \emph{Warunek Cauchy'ego zbieżnośi szeregu}:
+	\begin{equation}
+		(\forall \varepsilon > 0)(\exists N\in\mathbb{N})(\forall k\in\mathbb{N})(\forall n \geq N)(|a_n + a_{n+1} + a_{n+2} + \ldots + a_{n+k}| < \varepsilon).
+	\end{equation}
+\end{twierdzenie}
+\noindent Czasami wygodnie jest sumować od $n = n_0$ zamiast od $n = 1$. Wtedy szereg oznaczamy $\sum a_n$ albo $\sum\limits_{n\geq n_0}a_n$, natomiast suma częściowa i suma szeregu wyrażają się wzorami
+\begin{equation}
+	S_n = \sum_{k = n_0}^n a_k, \quad \sum_{n = n_0}^\infty a_n = \lim_{n\to\infty} S_n.
+\end{equation}
+\begin{twierdzenie}
+	$\sum(a_n + b_n) = \sum a_n + \sum b_n$, a jeśli $\sum a_n$ i $\sum b_n$ są zbieżne, to
+	\begin{equation}
+		\sum_{n=1}^\infty(a_n + b_n) = \sum_{n=1}^\infty a_n + \sum_{n=1}^\infty b_n.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	$\sum(c\cdot a_n) = c\cdot\sum a_n$, a jeśli $\sum a_n$ jest zbieżny, to
+	\begin{equation}
+		\sum_{n=1}^\infty(c\cdot a_n) = c\cdot \sum_{n=1}^\infty a_n.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}[Warunek konieczny zbieżności szeregu]
+	Jeśli $\lim\limits_{n\to\infty} a_n$ nie istnieje lub nie jest zbieżny do $0$, to $\sum a_n$ jest rozbieżny.
+\end{twierdzenie}
+
+\subsection{Szeregi o wyrazach nieujemnych}
+\begin{twierdzenie}[Kryterium Cauchy'ego o zagęszczaniu]
+	Jeśli ciąg $(a_n)$ jest \emph{nierosnący i nieujemny}, to
+	\begin{equation}
+		\sum a_n \quad\text{jest zbieżny} \iff \sum 2^n\cdot a_{2^n} \quad\text{jest zbieżny.}
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Szereg $\sum \frac{1}{n^p}$ jest zbieżny wtedy i tylko wtedy, gdy $p > 1$.
+\end{twierdzenie}
+\begin{twierdzenie}[Kryterium porównawcze]
+	Jeśli od pewnego miejsca zachodzi $0\leq a_n\leq b_n$, to zachodzą następujące implikacje:
+	\begin{equation}
+		\begin{aligned}
+			\sum b_n \quad\text{jest \phantom{ro}zbieżny}\quad&\implies\quad\sum a_n \quad\text{jest \phantom{ro}zbieżny} \\
+			\sum a_n \quad\text{jest rozbieżny}\quad&\implies\quad\sum b_n \quad\text{jest rozbieżny} \\
+		\end{aligned}
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}[Kryterium d'Alemberta]
+	Jeśli od pewnego miejsca $a_n > 0$ oraz
+	\begin{equation}
+		\limsup_{n\to\infty} \frac{a_{n+1}}{a_n} < 1,
+	\end{equation}
+	to szereg $\sum a_n$ jest zbieżny. Jeśli natomiast
+	\begin{equation}
+		\limsup_{n\to\infty} \frac{a_{n+1}}{a_n} > 1,
+	\end{equation}
+	to szereg $\sum a_n$ jest rozbieżny. Jeśli wartość granicy wynosi $1$, to kryterium nie rozstrzyga.
+\end{twierdzenie}
+\begin{twierdzenie}[Kryterium Cauchy'ego]
+	Jeśli od pewnego miejsca $a_n \geq 0$ oraz
+	\begin{equation}
+		\limsup_{n\to\infty} \sqrt[n]{a_n} < 1,
+	\end{equation}
+	to szereg $\sum a_n$ jest zbieżny. Jeśli natomiast
+	\begin{equation}
+		\limsup_{n\to\infty} \sqrt[n]{a_n} > 1,
+	\end{equation}
+	to szereg $\sum a_n$ jest rozbieżny. Jeśli wartość granicy wynosi $1$, to kryterium nie rozstrzyga.
+\end{twierdzenie}
+Kryterium Cauchy'ego i d'Alemberta porównują wyrazy $\sum a_n$ z wyrazami ciągu geometrycznego, zatem nie rozstrzygają zbieżności $\sum a_n$ jeśli $(a_n)$ dąży do $0$ wolniej niż ciąg geometryczny.
+
+Kryterium Cauchy'ego jest silniejsze niż kryterium d'Alemberta, jednak z tego drugiego często jest łatwiej skorzystać.
+\begin{twierdzenie}[Kryterium ilorazowe]
+	Jeśli od pewnego miejsca $a_n, b_n > 0$ to zachodzi:
+	\begin{equation}
+		\begin{aligned}
+			\sum b_n \,\,\,\text{jest zbieżny}\quad &\land \quad \lim_{n\to\infty}\frac{a_n}{b_n} \,\,\, \text{istnieje (właściwa)}\quad&&\implies\quad \sum a_n \,\,\, \text{jest zbieżny} \\
+			\sum b_n \,\,\,\text{jest rozbieżny}\quad &\land \quad \lim_{n\to\infty}\frac{a_n}{b_n} > 0 \,\,\,\text{(dopuszczamy $\infty$)}\quad&&\implies\quad \sum a_n \,\,\, \text{jest rozbieżny}
+		\end{aligned}
+	\end{equation}
+\end{twierdzenie}
+\subsection{Szeregi o wyrazach dowolnych}
+\begin{definicja}
+	Szereg $\sum a_n$ nazywamy \emph{bezwzględnie zbieżnym}, gdy szereg $\sum |a_n|$ jest zbieżny.
+	Szereg $\sum a_n$ nazywamy \emph{warunkowo zbieżnym}, gdy jest zbieżny oraz szereg $\sum |a_n|$ jest rozbieżny.
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli szereg $\sum a_n$ jest bezwzględnie zbieżny, to jest zbieżny.
+\end{twierdzenie}
+\begin{twierdzenie}[Kryterium Leibniza]
+	Jeśli ciąg $(b_n)$ jest \emph{nierosnący i zbieżny do $0$}, to szereg naprzemienny
+	\begin{equation}
+		\sum a_n = \sum {(-1)}^n \cdot b_n
+	\end{equation}
+	jest zbieżny.
+\end{twierdzenie}
+
+\begin{twierdzenie}[Kryterium Dirichleta]
+	Jeśli \emph{$\sum a_n$ jest ograniczony}, zaś $(b_n)$ jest ciągiem \emph{nierosnącym i zbieżnym do $0$}, to
+	\begin{equation}
+		\sum a_nb_n
+	\end{equation}
+	jest zbieżny.
+\end{twierdzenie}
+\begin{twierdzenie}[Kryterium Abela]
+	Jeśli \emph{$\sum a_n$ jest zbieżny}, zaś $(b_n)$ jest ciągiem \emph{monotonicznym i zbieżnym}, to
+	\begin{equation}
+		\sum a_nb_n
+	\end{equation}
+	jest zbieżny.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $(\forall k\in\mathbb{Z})(c\neq2k\pi)$, to szeregi
+	$\sum \cos(cn)$ i $\sum \sin(cn)$ są ograniczone.
+\end{twierdzenie}
+\begin{twierdzenie}[Łączność sumowania szeregów]
+	Jeśli szereg $\sum a_n$ jest zbieżny, a $\sum b_n$ powstaje przez pogrupowanie wyrazów szeregu $\sum a_n$, to znaczy
+	\begin{equation}
+		b_n = \sum_{i=1}^{k_n - k_{n-1}} a_{k_{n-1}+i} = a_{k_{n-1}+1} + a_{k_{n-1}+2} + a_{k_{n-1}+3} + \ldots + a_{k_n},
+	\end{equation}
+	gdzie $(k_n)$ to ściśle rosnący ciąg liczb naturalnych i $k_0=0$, to $\sum b_n$ jest zbieżny i
+	\begin{equation}
+		\sum_{n=1}^{\infty} a_n = \sum_{n=1}^{\infty} b_n
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}[Riemanna o szeregach warunkowo zbieżnych]
+	Jeśli $\sum a_n$ jest warunkowo zbieżny, to możemy dobrać bijekcję $f:\mathbb{N}\to\mathbb{N}$ (permutację $\mathbb{N}$) tak, że szereg
+	\begin{equation}
+		\sum a_{f(n)}
+	\end{equation}
+	będzie zbieżny do dowolnej granicy $g\in\mathbb{R}\cup \left\{-\infty, \infty\right\}$ lub nieograniczony zarówno z dołu jak i z góry.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $\sum a_n$ jest bezwzględnie zbieżny, to dla dowolnej bijekcji $f:\mathbb{N}\to\mathbb{N}$ (permutacji $\mathbb{N}$) zachodzi
+	\begin{equation}
+		\sum_{n=1}^\infty a_n = \sum_{n=1}^\infty a_{f(n)}
+	\end{equation}
+\end{twierdzenie}
+\subsection{Mnożenie szeregów}
+\begin{twierdzenie}[Sumowanie kwadratami]
+	Jeśli szeregi $\sum a_n$ i $\sum b_n$ są zbieżne oraz
+	\begin{equation}
+		c_n = a_1b_n + a_2b_n + \ldots + a_{n-1}b_n + a_nb_n + a_nb_{n-1} + \ldots + a_nb_2 + a_nb_1,
+ 	\end{equation}
+	to $\sum c_n$ jest zbieżny i zachodzi
+	\begin{equation}
+		\sum_{n=1}^\infty c_n = \left(\sum_{n=1}^\infty a_n\right)\left(\sum_{n=1}^\infty b_n\right)
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $\sum a_n$ i $\sum b_n$ są bezwzględnie zbieżne oraz ciąg $(d_n)$ składa się ze wszystkich iloczynów $a_mb_k$, czyli
+	\begin{equation}
+		(\forall m,k\in\mathbb{N})(\exists n\in\mathbb{N})(d_n = a_mb_k),
+	\end{equation}
+	to $\sum d_n$ także jest bezwzględnie zbieżny i zachodzi
+	\begin{equation}
+		\sum_{n=1}^{\infty} d_n = \left(\sum_{n=1}^\infty a_n\right)\left(\sum_{n=1}^\infty b_n\right)
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	\emph{Iloczynem Cauchy'ego} szeregów $\sum a_n$ i $\sum b_n$ nazywamy szereg $\sum C_n$ o wyrazach
+	\begin{equation}
+		C_n = a_1b_n + a_2b_{n-1} + a_3b_{n-2} + \ldots + a_nb_1 = \sum_{i = 1}^n a_ib_{n-i+1}
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Iloczyn Cauchy'ego szeregów bezwzględnie zbieżnych $\sum a_n$ i $\sum b_n$ jest bezwzględnie zbieżny oraz
+	\begin{equation}
+		\sum_{n=1}^{\infty} C_n = \left(\sum_{n=1}^\infty a_n\right)\left(\sum_{n=1}^\infty b_n\right)
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}[Mertensa]
+	Jeśli $\sum a_n$ jest bezwzględnie zbieżny oraz $\sum b_n$ jest zbieżny, to iloczyn Cauchy'ego $\sum C_n$ jest zbieżny oraz
+	\begin{equation}
+		\sum_{n=1}^{\infty} C_n = \left(\sum_{n=1}^\infty a_n\right)\left(\sum_{n=1}^\infty b_n\right)
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}[Abela]
+	Jeżeli iloczyn Cauchy'ego $\sum C_n$ szeregów zbieżnych $\sum a_n$ i $\sum b_n$ jest zbieżny, to
+	\begin{equation}
+		\sum_{n=1}^{\infty} C_n = \left(\sum_{n=1}^\infty a_n\right)\left(\sum_{n=1}^\infty b_n\right)
+	\end{equation}
+\end{twierdzenie}
+\subsection{Iloczyny nieskończone}
+\begin{definicja}
+	\emph{Iloczyn nieskończony} $\prod a_n$ to ciąg iloczynów częściowych
+	\begin{equation}
+		p_n = \prod_{i=1}^{n} a_i.
+	\end{equation}
+	Mówimy, że iloczyn nieskończony jest \emph{zbieżny}, jeśli istnieje \underline{niezerowa} granica $\lim\limits_{n \to\infty}p_n$. Wartość tej granicy nazywamy wartością iloczynu nieskończonego.
+	Gdy $\lim\limits_{n \to\infty}p_n = 0$, to mówimy, że iloczyn nieskończony $\prod a_n$ jest \emph{rozbieżny do $0$}.
+	Gdy  $\lim\limits_{n \to\infty}p_n = \infty$, to mówimy, że iloczyn nieskończony $\prod a_n$ jest \emph{rozbieżny do $\infty$}.
+\end{definicja}
+\begin{twierdzenie}
+	\begin{equation}
+		\prod a_n \,\,\,\text{jest zbieżny}\quad \iff \quad\sum \ln(a_n) \,\,\,\text{jest zbieżny}.
+	\end{equation}
+	Jeśli tak jest, to
+	\begin{equation}
+		\prod_{n=1}^{\infty} a_n = \exp\left({\sum_{n=1}^{\infty} \ln(a_n)}\right).
+	\end{equation}
+	Analogicznie, jeśli szeregi mają granice niewłaściwe, to zachodzą między szeregami/iloczynami odpowiednie zależności $-\infty, 0$ oraz $\infty, \infty$.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli od pewnego miejsca zachodzi $b_n \geq 0$, to
+	\begin{equation}
+		\prod (1+b_n) \,\,\,\text{jest zbieżny} \quad \iff \quad \sum b_n \,\,\,\text{jest zbieżny}.
+	\end{equation}
+	Jeśli ponadto $b_n \neq 1$, to
+	\begin{equation}
+		\prod (1-b_n) \,\,\,\text{jest zbieżny} \quad \iff \quad \sum b_n \,\,\,\text{jest zbieżny}.
+	\end{equation}
+\end{twierdzenie}
+
+
+
+
+
+
+
+
+
+% ostatnia sekcja - rzeczy luźniej powiązane z pozostałymi tematami, ale ważne
+\section{Inne}
+\begin{twierdzenie}[Wzór Abela na sumowanie przez części]
+	\begin{equation}
+		\sum_{i = 1}^n a_i(b_i - b_{i-1}) = a_nb_n - a_1b_0 - \sum_{i = 1}^{n-1} b_i(a_{i+1} - a_i)
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	Jeśli $(a_n)$ jest ograniczony, to określamy:
+	\begin{enumerate}
+		\item \emph{Granicę górną} (limes superior) ciągu $(a_n)$ jako
+		\begin{equation}
+			\limsup_{n\to\infty} a_n = \lim_{n \to\infty} \sup \left\{a_k : k \geq n\right\}
+		\end{equation}
+		\item \emph{Granicę dolną} (limes inferior) ciągu $(a_n)$ jako
+		\begin{equation}
+			\liminf_{n\to\infty} a_n = \lim_{n \to\infty} \inf \left\{a_k : k \geq n\right\}
+		\end{equation} 
+	\end{enumerate}
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli $(a_n)$ jest ograniczony, to $\limsup\limits_{n\to\infty} a_n$ oraz $ \liminf\limits_{n\to\infty} a_n$ istnieją.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $(a_n)$ jest ograniczony, to
+	\begin{equation}
+		\limsup_{n\to\infty} a_n = x \iff (\forall \varepsilon >0)\left[(\forall^\infty n)(a_n < x + \varepsilon) \land (\exists^\infty n)(x - \varepsilon < a_n)\right]
+	\end{equation}
+	Podobnie:
+	\begin{equation}
+		\liminf_{n\to\infty} a_n = y \iff (\forall \varepsilon >0)\left[(\forall^\infty n)(y - \varepsilon < a_n) \land (\exists^\infty n)(a_n < y + \varepsilon)\right]
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	Mówimy, że liczba $x$ jest \emph{punktem skupienia} ciągu $(a_n)$, jeśli jest granicą pewnego podciągu $(a_n)$.
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli ciąg $(a_n)$ jest ograniczony, to $\limsup\limits_{n\to\infty} a_n$ jest największym punktem skupienia ciągu $(a_n)$, a $ \liminf\limits_{n\to\infty} a_n$ najmniejszym.
+\end{twierdzenie}
+
+\begin{twierdzenie}
+	\begin{equation}
+		\lim_{n\to\infty} a_n = x \quad \iff \quad \liminf_{n\to\infty} a_n = \limsup_{n\to\infty} a_n = x
+	\end{equation}
+\end{twierdzenie}
+
+\end{document}
+
+
+
+
+
+
+
+
