@@ -1,0 +1,414 @@
+\documentclass[a4paper, 12pt]{mwart}
+
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[top = 2.5cm, bottom = 2.5cm, left = 2.5cm, right = 2.5cm]{geometry}
+
+\usepackage{enumitem}
+\usepackage{amsmath, amsfonts, amssymb, mathtools, amsthm}
+\mathtoolsset{showonlyrefs}
+
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Lin}{Lin}
+
+\theoremstyle{definition}
+\newtheorem{definicja}{Def}[section]
+\theoremstyle{plain}
+\newtheorem{twierdzenie}{TW}[section]
+\theoremstyle{remark}
+\newtheorem{wniosek}{Wniosek}[section]
+
+%strona tytułowa
+\author{skryba Łukasz Pawlak}
+\title{Definicje i Twierdzenia z Algebry M2}
+\date{Wykłady w roku 2021 \\ ostatnia kompilacja \today}
+
+\begin{document}
+\maketitle
+\section{Przekształcenia liniowe}
+\begin{definicja}
+	Niech będzie dane odwzorowanie $T: V \to W$, gdzie $V, W$ \ppauza przestrzenie liniowe nad ciałem $\mathbb{K}$.
+	Przekształcenie to nazywa \emph{się przekształceniem liniowym}, jeżeli:
+	\begin{enumerate}
+		\item Jest to homomorfizm, czyli
+		\begin{equation}
+			\left(\forall v_1, v_2 \in V\right)\left(T(v_1 + v_2) = T(v_1) + T(v_2)\right).
+		\end{equation}
+		\item Jest to przekształcenie jednorodne, czyli
+		\begin{equation}
+			\left(\forall \alpha \in \mathbb{K}\right)\left(\forall v \in V\right)\left(T(\alpha v) = \alpha T(v)\right).
+		\end{equation}
+	\end{enumerate}
+\end{definicja}
+\begin{definicja}
+	Zbiór przekształceń liniowych z $V$ w $W$ oznaczamy $L(V, W)$.
+	Zbiór przekształceń liniowych z $V$ w $V$ oznaczamy $L(V)$.
+\end{definicja}
+\begin{definicja}
+	\emph{Jądrem} przekształcenia liniowego $T$ nazywamy zbiór
+	\begin{equation}
+		\Ker T = T^{-1}(0) = \left\{v \in V: T(v) = 0\right\}.
+	\end{equation}
+	\emph{Obrazem} przekształcenia liniowego $T$ nazywamy zbiór
+	\begin{equation}
+		\Ima T = T[V] = \left\{w \in W: \left(\exists v \in V\right)\left(T(v) = w\right)\right\}.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Jeżeli $V, W$ \ppauza przestrzenie liniowe nad ciałem $\mathbb{K}$, przy czym $\dim V < \infty$ oraz $T \in L(V, W)$ to
+	\begin{equation}
+		\dim V = \dim (\Ker T) + \dim (\Ima T)
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	\emph{Defekt} i \emph{rząd} przekształcenia $T$ określamy jako odpowiednio
+	\begin{align}
+		\operatorname{def} T &= \dim \Ker T, \\
+		\operatorname{rz}  T &= \dim \Ima T.
+	\end{align}
+\end{definicja}
+\begin{twierdzenie}
+	Niech $V, W$ \ppauza przestrzenie liniowe nad ciałem $\mathbb{K}$, przy czym niech $\dim~V = n <~\infty$. Niech $B = \left\{e_1, e_2, \ldots, e_n\right\}$ będzie bazą przestrzeni $V$. Niech $T, S \in L(V, W)$. Wtedy
+	\begin{equation}
+		T = S \quad \iff \quad \left(\forall i \in [n]\right)\left(T(e_i) = S(e_i)\right).
+	\end{equation}
+\end{twierdzenie}
+\begin{wniosek}
+	Przekształcenie liniowe wystarczy zdefiniować na wektorach bazy.
+\end{wniosek}
+\begin{definicja}
+	Przekształcenie $T \in L(V, W)$ nazywamy \emph{izomorfizmem}, gdy jest bijekcją. Jeśli ponadto $V = W$, to $T$ nazywamy \emph{automorfizmem}.
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli $T \in L(V, W)$ oraz $\dim V = \dim W = n$, to $\circlearrowleft$:
+	\begin{enumerate}
+		\item $T$ jest suriekcją (,,na''),
+		\item $\operatorname{rz}T = n$,
+		\item $\operatorname{def}T = 0$,
+		\item $T$ jest iniekcją (1-1),
+		\item $T$ jest izomorfizmem.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $V$ i $W$ są przestrzeniami liniowymi nad ciałem $\mathbb{K}$, to $L(V, W)$  z naturalnie zdefiniowanymi operacjami dodawania funkcji i mnożenia funkcji przez skalar, jest przestrzenią liniową nad ciałem $\mathbb{K}$.
+\end{twierdzenie}
+\begin{definicja}
+	Uporządkowaną czwórkę $(A, +, \circ, \cdot_\mathbb{K})$ nazywamy \emph{algebrą z jednością nad ciałem $\mathbb{K}$}, jeśli zachodzą następujące warunki:
+	\begin{enumerate}
+		\item $(A, +, \cdot_\mathbb{K})$ jest przestrzenią liniową nad ciałem $\mathbb{K}$,
+		\item $(A, +, \circ)$ jest pierścieniem z jednością,
+		\item $\left(\forall \alpha \in \mathbb{K}\right)\left(\forall x, y \in A\right)\left[(\alpha \cdot_\mathbb{K} x) \circ y = x \circ (\alpha \cdot_\mathbb{K} y) = \alpha \cdot_\mathbb{K} (x \circ y)\right]$
+	\end{enumerate}
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli $V$ jest przestrzenią liniową nad ciałem $\mathbb{K}$, a $\circ$ oznacza złożenie funkcji, to $\left(L(V), +, \circ, \cdot_\mathbb{K}\right)$ jest algebrą z jednością nad ciałem $\mathbb{K}$.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $A = \left\{v_1, v_2, \ldots, v_n\right\}$ \ppauza baza przestrzeni $V$, $B = \left\{w_1, w_2, \ldots, w_m\right\}$ \ppauza baza przestrzeni $W$, to zbiór przekształceń $T_{i,j} \in L(V, W)$ postaci
+	\begin{align}
+		T_{i,j}(v_j) &= w_i, &&\text{dla } i \in [m], \quad j \in [n] \\
+		T_{i,j}(v_k) &= \vec{0}, &&\text{dla } i \in [m], \quad k \neq j
+	\end{align}
+	jest bazą przestrzeni $L(V, W)$.
+\end{twierdzenie}
+\begin{definicja}
+	Niech $T \in L(V, W)$, $A = \left\{v_1, v_2, \ldots, v_n\right\}$ \ppauza baza przestrzeni $V$, $B = \left\{w_1, w_2, \ldots, w_m\right\}$ \ppauza baza przestrzeni $W$. Wtedy dla każdego indeksu $i$ zachodzi
+	\begin{equation}
+		T(v_i) = \sum_{j = 1}^m t_{ji}w_j
+	\end{equation}
+	dla pewnych $t_{ji} \in \mathbb{K}$. Macierz $\left[t_{ji}\right]_{m \times n}$ nazywamy \emph{macierzą przekształcenia liniowego $T$} w bazach $A$ w przestrzeni $V$ i $B$ w przestrzeni $W$. Oznaczmy ją $M_B^A(T)$.
+\end{definicja}
+\begin{definicja}
+	Niech $B = \left\{v_1, v_2, \ldots, v_n \right\}$, $B' = \left\{v_1', v_2', \ldots, v_n' \right\}$. Macierz $P^B_{B'} = [p_{ji}]_{n \times n}$ taką, że dla dowolnego indeksu $i$ zachodzi
+	\begin{equation}
+		v_i' = \sum_{j = 1}^n p_{ji}v_j
+	\end{equation}
+	nazywamy \emph{macierzą przejścia} z bazy $B$ do bazy $B'$.
+\end{definicja}
+\begin{twierdzenie}
+	Jeżeli $T \in L(V, W)$, oraz $A, A'$ \ppauza bazy $V$, $B, B'$ \ppauza bazy $W$, to
+	\begin{equation}
+		 M^{A'}_{B'}(T) = P^{B'}_B \cdot M^A_B(T) \cdot P^A_{A'}.
+	\end{equation}
+	Jeżeli $V = W$, to możemy napisać $P^A_{A'} = P$ i wówczas $P^{A'}_A = P^{-1}$.
+\end{twierdzenie}
+Macierze przejścia i przekształcenia zapisujemy często w uproszczonej notacji, pomijając indeksy sugerujące bazy. Należy jednak uważać, aby taki zapis był jednoznaczny.
+\begin{definicja}
+	Niech $A, B \in \mathbb{K}^{n \times n}$. Mówimy, że macież $A$ jest \emph{podobna} do macierzy $B$, jeśli istnieje nieosobliwa macierz $P \in \mathbb{K}^{n \times n}$ taka że
+	\begin{equation}
+		B = P^{-1} A P.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli $V$ jest przestrzenią liniową nad ciałem $\mathbb{K}$ oraz $\dim V  = n < \infty$, to algebry $L(V)$ i $M_n(\mathbb{K})$ są izomorficzne (mnożenie macierzy odpowiada składaniu przekształceń liniowych, a dodawanie macierzy dodawaniu funkcji).
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $T \in L(V, W)$ jest bijekcją, to $\dim V = \dim W$, istnieje przekształcenie odwrotne $T^{-1}$ oraz jest to przekształcenie liniowe, czyli $T^{-1} \in L(W, V)$.
+\end{twierdzenie}
+\begin{twierdzenie} % z ćwiczeń
+	Jeśli $T \in L(V, W)$ jest przekształceniem różnowartościowym (iniekcją) i
+	$A = \left\{v_1, v_2, \ldots v_n\right\}$ jest zbiorem wektorów liniowo niezależnych, to zbiór
+	\begin{equation}
+		T[A] = \left\{T(v_1), T(v_2), \ldots, T(v_n)\right\}
+	\end{equation}
+	jest zbiorem wektorów liniowo niezależnych.
+\end{twierdzenie}
+\begin{twierdzenie} % z ćwiczeń
+	Jeśli $T \in L(V, W)$ jest przekształceniem na przestrzeń $W$ (suriekcją) i $A = \left\{v_1, v_2, \ldots v_n\right\}$ jest zbiorem rozpinającym $V$, czyli $
+	V =\Lin(A)$, to
+	\begin{equation}
+		W = \Lin(T[A]) = \Lin(T(v_1), T(v_2), \ldots, T(v_n)).
+	\end{equation}
+\end{twierdzenie}
+\begin{wniosek}
+	Jeśli $T \in L(V, W)$ jest bijekcją, to przekształca bazę $V$ w bazę $W$.
+\end{wniosek}
+\begin{definicja}
+	Przekształcenie $T \in L(V, W)$ jest \emph{nieosobliwe}, Jeżeli nieosobliwa jest macierz tego przekształcenia w dowolnej bazie.
+\end{definicja}
+\begin{twierdzenie}
+	Niech $T \in L(V, W)$, gdzie $\dim V < \infty$. Wtedy
+	\begin{equation}
+		T \text{ jest odwracalna (istnieje $T^{-1}$)}  \quad \iff \quad T \text{ jest nieosobliwa}.
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	Niech $V$ \ppauza przestrzeń liniowa nad ciałem $\mathbb{K}$, i niech $V_1, V_2$ \ppauza podprzestrzenie liniowe przestrzeni $V$. Zbiór
+	\begin{equation}
+		V_1 + V_2 = \left\{v_1 + v_2 \in V: v_1 \in V_1 \land v_2 \in V_2\right\}
+	\end{equation}
+	nazywamy \emph{sumą podprzestrzeni} $V_1$ i $V_2$.
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli $V_1 \leq V$ oraz $V_2 \leq V$, to $V_1 + V_2 \leq V$.
+	Słownie: jeśli $V_1, V_2$ są podprzestrzeniami liniowymi $V$, to $V_1 + V_2$ jest podprzestrzenią liniową $V$.
+\end{twierdzenie}
+\begin{definicja}
+	Suma podprzestrzeni $V_1 + V_2$ nazywa się \emph{sumą prostą}, jeżeli każdy wektor $v \in V_1 + V_2$  można przedstawić jednoznacznie w postaci sumy wektorów $v = v_1 + v_2$ dla pewnych $v_1 \in V_1$, $v_2 \in V_2$. Sumę prostą oznaczamy $V_1 \oplus V_2$.
+\end{definicja}
+\begin{twierdzenie}
+	Niech $V_1, V_2 \leq V$ \ppauza przestrzenie liniowe. Wtedy
+	\begin{equation}
+		V_1 + V_2 \quad \text{jest sumą prostą} \quad \iff \quad V_1 \cap V_2 = \{\vec{0}\}.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Niech $V_1, V_2 \leq V$, $\dim V = n < \infty$. Wtedy
+	\begin{equation}
+		\dim (V_1 + V_2) = \dim V_1 + \dim V_2 - \dim (V_1 \cap V_2).
+	\end{equation}
+\end{twierdzenie}
+\section{Wektory i wartości własne przekształceń liniowych i macierzy}
+\begin{definicja}
+	Niech $V$ \ppauza przestrzeń liniowa, $T \in L(V)$, $W \leq V$. Mówimy, że  \emph{$W$ jest niezmiennicza względem $T$}, jeżeli
+	\begin{equation}
+		T[W] \subseteq W.
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	Niech $V$ \ppauza przestrzeń liniowa nad ciałem $\mathbb{K}$, $T \in L(V)$. Element $\lambda \in \mathbb{K}$ nazywamy \emph{wartością własną} przekształcenia $T$, jeśli istnieje wektor $v \in V \setminus \{\vec{0}\}$ taki, że\begin{equation}
+		T(v) = \lambda v.
+	\end{equation}
+	Wówczas wektor $v$ nazywamy \emph{wektorem własnym odpowiadającym wartości własnej $\lambda$}.
+\end{definicja}
+\begin{wniosek}
+	Jeśli $v$ jest wektorem własnym przekształcenia $T \in L(V)$, to $\Lin (v)$ jest podprzestrzenią niezmiennicza względem $T$.
+\end{wniosek}
+\begin{definicja}
+	Niech $T \in L(V)$ i niech $\lambda$ będzie wartością własną przekształcenia $T$. Wtedy zbiór
+	\begin{equation}
+		V_\lambda = \left\{v \in V: T(v) = \lambda v\right\}
+	\end{equation}
+	jest podprzestrzenią $V$ i nazywamy go \emph{przestrzenią własną} przekształcenia $T$ odpowiadającą wartości własnej $\lambda$. Wszystkie elementy poza wektorem zerowym w tej przestrzeni są wektorami własnymi odpowiadającymi wartości własnej $\lambda$.
+\end{definicja}
+\begin{twierdzenie}
+	Niech $T \in L(V)$, $\dim V < \infty$ i niech $\lambda_1, \lambda_2, \ldots, \lambda_m$ \ppauza \emph{różne} wartości własne przekształcenia $T$. Jeśli $v_1, v_2, \ldots, v_m$ \ppauza wektory własne odpowiadające odpowiednim wartościom własnym $\lambda_i$, to są to wektory liniowo niezależne.
+\end{twierdzenie}
+\begin{wniosek}
+	Jeśli $T \in L(V)$, $\dim V = n < \infty$, to $T$ ma co najwyżej $n$ różnych wartości własnych.
+\end{wniosek}
+\begin{twierdzenie}
+	Jeśli $T \in L(V)$, $\dim V = n < \infty$ i $T$ ma $n$ różnych wartości własnych, to macierz przekształcenia $T$ w bazie wektorów własnych jest diagonalna.
+\end{twierdzenie}
+\begin{definicja}
+	Jeśli $A \in M_n(\mathbb{K})$, to wektor $v \in \mathbb{K}^n$ nazywamy \emph{wektorem własnym macierzy $A$}, jeżeli nie jest to wektor serowy, oraz
+	\begin{equation}
+		A \cdot v = \lambda v,
+	\end{equation}
+	dla pewnej $\lambda \in \mathbb{K}$.
+\end{definicja}
+\begin{definicja}
+	Wielomian
+	\begin{equation}
+		W(\lambda) = \det (A - \lambda I)
+	\end{equation}
+	nazywamy \emph{wielomianem charakterystycznym} macierzy $A$. Równanie postaci
+	\begin{equation}
+		\det (A - \lambda I) = 0
+	\end{equation}
+	nazywamy \emph{równaniem charakterystycznym}.
+\end{definicja}
+\begin{twierdzenie}
+	Wartości własne macierzy $A$, to pierwiastki równania charakterystycznego
+	\begin{equation}
+		\det (A - \lambda I) = 0.
+	\end{equation}
+	Przestrzeń własna odpowiadająca wartości własnej $\lambda$ jest przestrzenią rozwiązań układu jednorodnego
+	\begin{equation}
+		(A - \lambda I) \cdot v = \vec 0.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie} % z ćwiczeń
+	Jeśli $T \in L(V)$, to wartości własne macierzy przekształcenia $T$ są takie same w każdej bazie. Są także takie same jak wartości własne przekształcenia $T$.
+\end{twierdzenie}
+\section{Przestrzenie Euklidesowe} % w zasadzie unitarne, ale przykłady z R^n
+\begin{definicja}
+	Niech $V$ będzie przestrzenią liniową nad ciałem $\mathbb{R}$. Funkcję
+	\begin{equation}
+		F:V \times V \to \mathbb{R}
+	\end{equation}
+	nazywamy \emph{iloczynem skalarnym} jeśli dla dowolnych $u, v, w \in \mathbb{R}$ oraz $\lambda \in \mathbb{R}$ spełnia następujące warunki:
+	\begin{enumerate}
+		\item $F(u, v) = F(v, u)$ \quad (symetria),
+		\item $F(\lambda u, v) = \lambda F(u, v)$ \quad (jednorodność ze względu na pierwszy argument),
+		\item $F(u + v, w) = F(u, w) + F(v, w)$ \quad (addytywność ze względu na pierwszy argument),
+		\item $F(v, v) \geq 0$ \quad (dodatnia określoność),
+		\item $F(v, v) = 0 \iff v = \vec 0$.
+		% ten gość pewnie powinien siedzieć w preambule, ale tak jest jakoś czytelnije, a działa.
+		\newcounter{warunkiIloczynuSkalarnego}
+		\setcounter{warunkiIloczynuSkalarnego}{\value{enumi}}
+	\end{enumerate}
+	Iloczyn skalarny oznaczamy $F(u, v) = \left<u, v\right>$.
+\end{definicja}
+\begin{wniosek}
+	Powyższe warunki dają dodatkowe własności:
+	\begin{enumerate}
+		\setcounter{enumi}{\value{warunkiIloczynuSkalarnego}}
+		\item $F(u, \lambda v) = \lambda F(u, v)$ \quad (jednorodność ze względu na drugi argument),
+		\item $F(u, v + w) = F(u, v) + F(u, w)$ \quad (addytywność ze względu na drugi argument).
+	\end{enumerate}
+\end{wniosek}
+\begin{definicja}
+	\emph{Formą dwuliniową} nad przestrzenią liniową $V$ nad ciałem $\mathbb{K}$ nazywamy funkcję
+	\begin{equation}
+		F:V \times V \to \mathbb{K}
+	\end{equation}
+	spełniającą dla dowolnych $u, v, w \in V$ oraz $\lambda \in \mathbb{K}$:
+	\begin{enumerate}
+		\item $F(\lambda u, v) = \lambda F(u, v)$ \quad (jednorodność ze względu na pierwszy argument),
+		\item $F(u, \lambda v) = \lambda F(u, v)$ \quad (jednorodność ze względu na drugi argument),
+		\item $F(u + v, w) = F(u, w) + F(v, w)$ \quad (addytywność ze względu na pierwszy argument),
+		\item $F(u, v + w) = F(u, v) + F(u, w)$ \quad (addytywność ze względu na drugi argument).
+	\end{enumerate}
+	Lub równoważnie 
+	\begin{enumerate}
+		\item $F(\lambda u + v, w) = \lambda F(u, w) + F(v, w)$,
+		\item $F(u, \lambda v + w) = F(u, v) +  \lambda F(u, w)$.
+	\end{enumerate}
+	czyli liniowość względem obu argumentów.
+\end{definicja}
+\begin{wniosek}
+	Iloczyn skalarny to forma dwuliniowa z dodatkowym założeniem symetrii i dodatniej określoności. % i nie wiem czy ostatni punkt też trzeba osobno wymienić :')
+\end{wniosek}
+\begin{definicja}
+	Parę $\left(V, \left< \cdot, \cdot \right> \right)$, gdzie $V$ \ppauza przestrzeń liniowa $n$\dywiz wymiarowa nad $\mathbb{R}$, $\left< \cdot, \cdot \right>$ \ppauza iloczyn skalarny o wartościach w $\mathbb{R}$, nazywamy
+	\emph{przestrzenią Euklidesową} rzeczywistą.
+\end{definicja}
+\begin{definicja}
+	Wektory $v, w$ w przestrzeni Euklidesowej rzeczywistej $V$ nazywamy \emph{ortogonalnymi}, jeśli
+	\begin{equation}
+		\left< v, w \right> = 0.
+	\end{equation}
+	Jeśli tak jest, o własność tę oznaczamy $v \perp w$.
+\end{definicja}
+\begin{definicja}
+	Bazę $B = \left\{e_1, e_2, \ldots, e_n\right\}$ przestrzeni Euklidesowej rzeczywistej $V$ nazywamy \emph{ortogonalną}, jeśli
+	\begin{equation}
+		\left(\forall i \in [n]\right)\left(\forall j \in [n] \setminus \{i\}\right)\left(e_i \perp e_j\right).
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	Niech $V$ \ppauza przestrzeń liniowa nad ciałem $\mathbb{K}$ ($\mathbb{R}$ lub $\mathbb{C}$). Funkcję $F:V \to \mathbb{R}$ nazywamy \emph{normą}, jeżeli dla dowolnych $u, v \in V$, $\lambda \in \mathbb{K}$ spełnia
+	\begin{enumerate}
+		\item $F(v) \geq 0$,
+		\item $F(\lambda v) = |\lambda|F(v)$,
+		\item $F(u+v) \leq F(u) + F(v)$,
+		\item $F(v) = 0 \iff v = \vec 0$.
+	\end{enumerate}
+	Normę oznaczamy przez
+	\begin{equation}
+		F(v) = ||v||.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}[Nierówność Cauchy'ego \ppauza Schwartza]
+	W przestrzeni Euklidesowej dla dowolnych wektorów $u, v$ zachodzi nierówność\begin{equation}
+		|\left< u, v \right>| \leq \sqrt{\left< u, u \right>} \sqrt{\left< v, v \right>}
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	W przestrzeni Euklidesowej z iloczynem skalarnym $\left< \cdot, \cdot \right>$ funkcja
+	\begin{equation}
+		\|u\| = \sqrt{\left< u, u \right>}
+	\end{equation}
+	jest normą. Nazywamy ją normą \emph{indukowaną} przez iloczyn skalarny.
+\end{twierdzenie}
+\begin{definicja}
+	Bazę ortogonalną $B = \left\{e_1, e_2, \ldots, e_n\right\}$ przestrzeni Euklidesowej rzeczywistej $V$ nazywamy \emph{ortonormalną}, jeśli
+	\begin{equation}
+		\left(\forall i \in [n]\right)\left(\|e_i\| = 1\right).
+	\end{equation}
+	Warunek ortonormalności możemy zapisać przy pomocy delty Kroneckera:
+	\begin{equation}
+		\left< v_i, v_j \right> = \delta_{ij} = 
+		\begin{cases}
+			1 \quad \text{gdy } i = j \\
+			0 \quad \text{gdy } i \neq j.
+		\end{cases}
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	Niech $v, w \in V \setminus \{\vec 0\}$, gdzie $\left(V, \left< \cdot, \cdot \right> \right)$ \ppauza przestrzeń Euklidesowa. \emph{Kąt} pomiędzy wektorami $v$ i $w$ definiujemy przy pomocy funkcji cosinus, jako
+	\begin{equation}
+		\cos \measuredangle (v, w) = \frac{\left< v, w \right> }{\|v\| \|w\|},
+	\end{equation}
+	przy czym jest to kąt z przedziału $[0, \pi)$
+\end{definicja}
+\begin{twierdzenie}
+	Zbiór niezerowych wektorów ortogonalnych jest liniowo niezależny.
+\end{twierdzenie}
+\begin{twierdzenie}[Ortogonalizacja Grama \ppauza Schmidta]
+	W $n$\dywiz wymiarowej przestrzeni Euklidesowej rzeczywistej istnieje baza ortogonalna. Przy pomocy dowolnej bazy możemy wyznaczyć bazę ortonormalną stosując poniższy algorytm: \\
+	Niech $B = \left\{v_1, v_2, \ldots v_n\right\}$ \ppauza baza $\mathbb{R}$.
+	\begin{enumerate}
+		\item Ustalamy $w_1 = v_1$,
+		\item Wektor $w_k$ wyznaczamy jako kombinację liniową wektorów $w_i$ o indeksach mniejszych od $k$ oraz wektora $v_k$:
+		\begin{equation}
+			w_k = v_k - \sum_{i=1}^{k-1} \frac{\left<w_i, v_k \right>}{\|w_i\|^2} w_i.
+		\end{equation}
+	\end{enumerate}
+\end{twierdzenie}
+\begin{wniosek}
+	Każdy zbiór wektorów ortonormalnych w $n$\dywiz wymiarowej przestrzeni Euklidesowej rzeczywistej można uzupełnić do bazy ortonormalnej.
+\end{wniosek}
+\begin{definicja}
+	\emph{Dopełnieniem ortogonalnym} przestrzeni $W \leq V$ nazywamy zbiór
+	\begin{equation}
+		W^\perp = \left\{v \in V: \left(\forall w \in W\right)\left(w \perp v\right)\right\}.
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Rzutem ortogonalnym} wektora $v \in V$ na podprzestrzeń $W \leq V$ nazywamy każdy wektor, który w dowolnej bazie ortonormalnej $B = \left\{e_1, e_2, \ldots, e_m\right\}$ podprzestrzeni $W$ ma postać
+	\begin{equation}
+		w = \sum_{i=1}^{m} \left< v, e_i \right> e_i.
+	\end{equation}
+\end{definicja}
+\end{document}
+
+
+
+
+
+
