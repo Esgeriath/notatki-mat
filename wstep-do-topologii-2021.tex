@@ -1,0 +1,427 @@
+\documentclass[a4paper, 12pt]{mwart}
+
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[top = 2.5cm, bottom = 2.5cm, left = 2.5cm, right = 2.5cm]{geometry}
+
+\usepackage{enumitem}
+\usepackage{amsmath, amsfonts, amssymb, mathtools, amsthm}
+\mathtoolsset{showonlyrefs}
+
+\DeclareMathOperator{\diam}{diam}
+\newcommand{\cc}{\mathsf{c}}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\intr}{int}
+
+\theoremstyle{definition}
+\newtheorem{definicja}{Def}[section]
+\theoremstyle{plain}
+\newtheorem{twierdzenie}{TW}[section]
+\theoremstyle{remark}
+\newtheorem{wniosek}{Wniosek}[section]
+\newtheorem*{uwaga}{Uwaga}
+
+%strona tytułowa
+\author{skryba Łukasz Pawlak}
+\title{Definicje i Twierdzenia ze Wstępu do Topologii}
+\date{Wykłady w roku 2021 \\ ostatnia kompilacja \today}
+
+\begin{document}
+\maketitle
+\section{Przestrzenie metryczne}
+\begin{definicja}
+	\emph{Metryką} na zbiorze $X$ nazywamy funkcję $d\colon X\times X\to [0, \infty)$ która dla dowolnych $x, y, z \in X$ spełnia następujące warunki:
+	\begin{enumerate}
+		\item $d(x, y) = 0 \iff x = y$,
+		\item $d(x, y) = d(y, x)$,
+		\item $d(x, z) \leq d(x, y) + d(y, z)$.
+	\end{enumerate}
+	Parę $(X, d)$ nazywamy \emph{przestrzenią metryczną}.
+\end{definicja}
+%Warto znać kilka metryk na $\mathbb{R}^2$:
+%\begin{enumerate}
+%	\item metryka taksówkowa dana wzorem $d_1((x, y), (x', y')) = |x - x'| + |y - y'|$
+%\end{enumerate}
+\begin{definicja}
+	Ciąg $(x_n)$ elementów przestrzeni $X$ jest \emph{zbieżny} do $x\in X$ gdy $\lim\limits_{n \to \infty} d(x_n, x) = 0$. Inaczej:
+	\begin{equation}
+		\left(\forall \varepsilon > 0\right)\left(\exists n_0 \in \mathbb{N}\right)\left(\forall n > n_0\right)\left(d(x, x_n) < \varepsilon \right).
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Każdy ciąg zbieżny ma dokładnie jedną granicę.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Każdy ciąg stały jest zbieżny.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Każdy podciąg ciągu zbieżnego jest zbieżny do tej samej granicy.
+\end{twierdzenie}
+\begin{definicja}
+	\emph{Odstępem} punktu $x \in X$ od % niepustego ? %
+	zbioru $A \subseteq X$ nazywamy liczbę
+	\begin{equation}
+		d(x, A) = \inf\left\{d(x, a)\colon a \in A\right\}.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Niech $(X, d)$ będzie przestrzenią metryczną i niech $\emptyset \neq Y \subseteq X$. Oznaczmy $d_Y \overset{df}{=} d_{\restriction Y\times Y}$. Wtedy $(Y, d_Y)$ jest przestrzenią metryczną. Nazywamy ją \emph{podprzestrzenią przestrzeni $X$}.
+\end{twierdzenie}
+\begin{definicja}
+	\emph{Kulą otwartą} (albo po prostu kulą) o środku w $x\in X$ i promieniu $r \in (0, \infty)$ nazywamy zbiór
+	\begin{equation}
+		K(x, r) = \left\{y \in X\colon d(x, y) < r\right\}.
+	\end{equation}
+	\emph{Kulą domkniętą} nazywamy zbiór
+	\begin{equation}
+		\overline K(x, r) = \left\{y\in X\colon d(x, y) \leq r\right\}.
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Kulą uogólnioną} lub \emph{otoczeniem} zbioru $A \subseteq X$ o promieniu $r > 0$ nazywamy zbiór
+	\begin{equation}
+		K(A, r) = \left\{y \in X\colon d(y, A) < r\right\}.
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	Zbiór $A \subseteq X$ nazywamy \emph{ograniczonym}, jeśli zawiera się w pewnej kuli:
+	\begin{equation}
+		\left(\exists x \in X\right)\left(\exists r > 0\right)\left(A \subseteq K(x, r)\right).
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Średnicą} zbioru $A \subseteq X$ nazywamy wartość
+	\begin{equation}
+		\diam A = \sup \left\{d(x, y)\colon x, y \in A \right\}.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Każdy ciąg zbieżny w przestrzeni metrycznej jest ograniczony, t.j. zbiór wartości tego ciągu jest ograniczony.
+\end{twierdzenie}
+\begin{definicja}
+	Niech $(X, d_X)$, $(Y, d_Y)$ \ppauza przestrzenie metryczne, $f\colon X \to Y$. Mówimy, że $f$ jest \emph{ograniczona}, jeśli ograniczony jest zbiór $f[X]$ w przestrzeni $Y$.
+\end{definicja}
+\section{Zbiory otwarte i domknięte w przestrzeniach metrycznych}
+\begin{definicja}
+	Zbiór $A \subseteq X$ jest \emph{otwarty} w przestrzeni metrycznej $(X, d)$, jeśli każdy jego element zawiera się w nim wraz z pewną kulą, czyli
+	\begin{equation}
+		\left(\forall a \in A\right)\left(\exists r > 0\right)\left(K(a, r) \subseteq A\right).
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Otoczeniem} zbioru $A$ nazywamy dowolny zbiór otwarty zawierający $A$.
+\end{definicja}
+\begin{twierdzenie}
+	Kule otwarte są otwarte w dowolnej przestrzeni metrycznej.
+\end{twierdzenie}
+\begin{twierdzenie} \label{otwarte}
+	Dla dowolnej przestrzeni metrycznej $(X, d)$ zachodzą:
+	\begin{enumerate}
+		\item $X$ oraz $\emptyset$ są zbiorami otwartymi,
+		\item suma dowolnej mnogości zbiorów otwartych jest zbiorem otwartym,
+		\item przekrój skończonej rodziny zbiorów otwartych jest zbiorem otwartym.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{definicja} \label{topologia}
+	Rodzinę wszystkich zbiorów otwartych w danej przestrzeni metrycznej nazywamy \emph{topologią}.
+\end{definicja}
+\begin{definicja}
+	Zbiór $A \subseteq X$ nazywamy \emph{domkniętym}, jeśli jego dopełnienie jest zbiorem otwartym.
+\end{definicja}
+\begin{twierdzenie}
+	Każdy zbiór otwarty jest sumą pewnej rodziny kul otwartych. W $\mathbb{R}^n$, każdy zbiór otwarty jest sumą przeliczalnie wielu kul otwartych.
+	% to ma jakiś związek z ośrodkowością, prawda?
+\end{twierdzenie}
+\begin{definicja}
+	Punkt $x \in X$ nazywamy \emph{punktem skupienia} zbioru $A \subseteq X$, gdy
+	\begin{equation}
+		\left(\forall r > 0\right)\left((K(x, r) \setminus \{x\}) \cap A \neq \emptyset\right).
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	$x \in X$ jest punktem skupienia zbioru $A \subseteq X$ wtedy i tylko wtedy gdy istnieje ciąg o wartościach w $A \setminus\{x\}$ zbieżny do $x$:
+	\begin{equation}
+		\left(\exists (x_n) \in {\left(A \setminus \{x\}\right)}^\mathbb{N}\right)\left( \lim_{n \to \infty} x_n = x\right).
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Zbiór $F$ jest domknięty wtedy i tylko wtedy gdy zawiera wszystkie swoje punkty skupienia.
+\end{twierdzenie}
+\begin{twierdzenie}[charakteryzacja zbiorów domkniętych]
+	Zbiór $F$ jest domknięty wtedy i tylko wtedy, gdy zawiera granicę każdego swojego ciągu zbieżnego:
+	\begin{equation}
+		\left(\forall (x_n) \in F^\mathbb{N}\right)\left(\lim_{n \to \infty} x_n = x \implies x \in F\right).
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Zbiór $U$ jest otwarty wtedy i tylko wtedy, gdy nie zawiera punktów skupienia $U^\cc$.
+\end{twierdzenie}
+\begin{twierdzenie}[dualność zbiorów otwartych i domkniętych, patrz \ref{otwarte}]
+	Dla dowolnej przestrzeni metrycznej $(X, d)$ zachodzą:
+	\begin{enumerate}
+		\item $X$ oraz $\emptyset$ są zbiorami domkniętymi,
+		\item przekrój dowolnej mnogości zbiorów domkniętych jest zbiorem domkniętym,
+		\item suma skończonej rodziny zbiorów domkniętych jest zbiorem domkniętym.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Zachodzą:
+	\begin{enumerate}
+		\item w dowolnej przestrzeni metrycznej $\emptyset$ oraz $X$ są jednocześnie otwarte i domknięte,
+		\item w $\mathbb{R}$ z naturalną metryką jedynymi zbiorami otwarto\dywiz domkniętymi są powyższe,
+		\item to samo się tyczy $\mathbb{R}^n$, kiedy za metrykę przyjmiemy metrykę euklidesową ($d_2$), taksówkową ($d_1$) czy maksimum ($d_\infty$).
+	\end{enumerate}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Dla dowolnego $A \subseteq X$ istnieją:
+	\begin{enumerate}
+		\item $\subseteq$\dywiz najmniejszy zbiór domknięty zawierający $A$ (oznaczamy go $\bar A$ lub $\cl A$),
+		\item $\subseteq$\dywiz największy zbiór otwarty zawierający się w $A$ (oznaczamy go $\mathring A$ lub $\intr A$).
+	\end{enumerate}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Własności domknięcia i wnętrza dla dowolnych $A$ i $B$ zawartych w $X$:
+	\begin{enumerate}
+		\item $\intr \emptyset = \emptyset = \cl \emptyset, \quad \intr X = X = \cl X,$
+		\item $\mathring A \subseteq A \subseteq \bar A$,
+		\item $A$ jest domknięty $\iff A = \cl A$, \qquad $A$ jest otwarty $\iff A = \intr A$,
+		\item $\cl A = {\left(\intr \left(A^\cc\right) \right)}^\cc$, \qquad $\intr A = {\left(\cl \left(A^\cc\right) \right)}^\cc$
+		\item $A \subseteq B \implies (\cl A \subseteq \cl B \quad \land \quad \intr A \subseteq \intr B)$,
+		\item $\cl (A \cup B) = \cl A\ \cup\ \cl B$, \quad $\cl (A \cap B) \subseteq \cl A \ \cap\ \cl B$,
+		\item $\intr (A \cap B) = \intr A \ \cap\ \intr B$, \quad $\intr A\ \cup\ \intr B \subseteq \intr (A \cup B)$.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{definicja}
+	\emph{Brzegiem} zbioru $A$ nazywamy zbiór
+	\begin{equation}
+		\partial A = \bar A \setminus \mathring A,
+	\end{equation}
+	czasami oznaczany również $\operatorname{Fr} A$. % lub bd A, ale na tym wykładzie o tym nie było.
+\end{definicja}
+\begin{definicja}
+	Niech $X \in X$, $A \subseteq X$. Wtedy
+	\renewcommand{\labelitemi}{\textbullet }
+	\begin{itemize}
+		\item $x$ jest \emph{punktem wewnętrznym} zbioru $A$, gdy $\left(\exists r > 0\right)\left(K(x, r) \subseteq A\right)$,
+		\item $x$ jest \emph{punktem zewnętrznym} zbioru $A$, gdy $\left(\exists r > 0\right)\left(K(x, r) \subseteq A^\cc\right)$,
+		\item $x$ jest \emph{punktem brzegowym}, gdy $\left(\forall r > 0\right)\left(K(x, r) \cap A \neq \emptyset\ \land\ K(x, r) \cap A^\cc \neq \emptyset\right)$.
+	\end{itemize}
+\end{definicja}
+\begin{twierdzenie}
+	Wnętrze $A$ to zbiór punktów wewnętrznych $A$. Brzeg to zbiór punktów brzegowych, a domknięcie to zbiór punktów brzegowych i wewnętrznych.
+\end{twierdzenie}
+\begin{definicja}
+	Zbiór $A \subseteq X$ nazywamy \emph{gęstym} w $X$, jeśli
+	\begin{equation}
+		\cl A = X.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	$\circlearrowleft$:
+	\begin{enumerate}
+		\item $A$ jest gęsty w $X$,
+		\item $\left(\forall x \in X\right)\left(\exists (a_n) \in A^\mathbb{N}\right)\left(\lim\limits_{n \to \infty} = x\right)$,
+		\item $\left(\forall U \subseteq X\right)\left(U = \intr U \implies U \cap A \neq \emptyset\right)$,
+		\item $\left(\forall x \in X\right)\left(\forall \varepsilon > 0\right)\left(K(x, \varepsilon) \cap A \neq \emptyset\right)$.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{definicja}
+	Przestrzeń metryczna $(X, d)$ jest \emph{ośrodkowa}, jeśli istnieje w niej przeliczalny zbiór gęsty. Taki zbiór nazywamy \emph{ośrodkiem}. % i zdaje się, że często oznaczamy Q (tak jak otwarte U, a domknięte F).
+\end{definicja}
+\begin{definicja}
+	Zbiór $B \subseteq X$ jest \emph{brzegowy} w $(X, d)$, gdy $\intr B = \emptyset$.
+\end{definicja}
+\begin{twierdzenie}
+	$\circlearrowleft$:
+	\begin{enumerate}
+		\item $A$ jest brzegowy w $X$,
+		\item $A^\cc$ jest gęsty w $X$,
+		\item w każdym niepustym zbiorze otwartym w $X$ istnieją elementy z poza $A$.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{wniosek}
+	Podzbiór zbioru brzegowego jest brzegowy. Nadzbiór zbioru gęstego jest gęsty.
+\end{wniosek}
+\section{Funkcje ciągłe}
+\begin{definicja}
+	Niech $(X, d_X)$, $(Y, d_Y)$ \ppauza przestrzenie metryczne. Funkcja $f\colon X \to Y$ jest \emph{ciągła w punkcie $x_0 \in X$}
+	\begin{enumerate}
+		\item w sensie Heinego, jeśli $\left(\forall (x_n) \in X^\mathbb{N}\right)\left(\lim\limits_{n \to \infty} x_n = x \implies \lim\limits_{n \to \infty} f(x_n) = f(x)\right)$,
+		\item w sensie Cauchy'ego, jeśli $\left(\forall \varepsilon > 0\right)\left(\exists \delta > 0\right)\left(x \in X\right)\left(d_X(x, x_0) < \delta \implies d_Y(f(x), f(x_0)) < \varepsilon\right)$.
+	\end{enumerate}
+	(Definicje są równoważne przy założeniu aksjomatu wyboru.)
+\end{definicja}
+\begin{twierdzenie}
+	Dla $f\colon X \to Y$, $x_0 \in X$ $\circlearrowleft$:
+	\begin{enumerate}
+		\item $f$ jest ciągła w $x_0$ w sensie Heinego,
+		\item $f$ jest ciągła w $x_0$ w sensie Cauchy'ego,
+		\item Dla każdego otoczenia otwartego $V$ punktu $f(x_0)$ istnieje otoczenie $U$ punktu $x_0$ takie, że $f[U] \subseteq V$,
+		\item $\left(\forall A \subseteq X\right)\left(x_0 \in \cl A \implies f(x_0) \in \cl \left(f[A]\right)\right)$.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{definicja}
+	Funkcję $f\colon X \to Y$ nazywamy \emph{ciągłą}, gdy jest ciągła w każdym punkcie.
+\end{definicja}
+\begin{twierdzenie}
+	Dla $f\colon X \to Y$ $\circlearrowleft$:
+	\begin{enumerate}
+		\item $f$ jest ciągła.
+		\item Dla każdego otwartego $U \subseteq Y$, $f^{-1}[U]$ jest otwarty w $X$,		\item Dla każdego domkniętego $F \subseteq Y$, $f^{-1}[F]$ jest domknięty w $X$,
+		\item $\left(\forall A \subseteq X\right)\left(f[\cl A] \subseteq \cl (f[A])\right)$
+	\end{enumerate}
+\end{twierdzenie}
+\begin{definicja}
+	Funkcję $f\colon X \to Y$, która jest ciągłą bijekcją, oraz której odwrotność $f^{-1}$ jest funkcją ciągłą, nazywamy \emph{homeomorfizmem}.
+	Przestrzenie $(X, d_X)$ i $(Y, d_Y)$ nazywamy \emph{homeomorficznymi}, jeśli istnieje między nimi homeomorfizm.
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli $f\colon X \to Y$ jest bijekcją, to $\circlearrowleft$:
+	\begin{enumerate}
+		\item $f$ jest homeomorfizmem,
+		\item $\left(U \subseteq X\right)(U$ jest otwarty w $X$ \quad $\iff$ \quad $f[U]$ jest otwarty w $Y)$,
+		\item $\left(F \subseteq X\right)(F$ jest domknięty w $X$ \quad $\iff$ \quad $f[F]$ jest domknięty w $Y)$,
+		\item $\left(\forall A \subseteq X\right)\left(f[\cl A] = \cl (f[A])\right)$,
+		\item $\left(\forall x \in X\right)\left(\forall (x_n) \in X^\mathbb{N}\right)\left(\lim\limits_{n \to \infty} x_n = x \iff \lim\limits_{n \to \infty} f(x_n) = f(x)\right)$.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Złożenie homeomorfizmów jest homeomorfizmem.
+\end{twierdzenie}
+\begin{definicja}
+	Funkcję $f\colon X \to Y$ nazywamy \emph{homeomorfizmem na obraz}, jeśli $\tilde f \colon X \to f[X]$ jest homeomorfizmem przestrzeni $(X, d_X)$ i $(f[X], {d_Y}_{\restriction f[X] \times f[X]})$.
+\end{definicja}
+\begin{definicja}
+	Funkcja $f\colon X \to Y$ jest \emph{izometrią}, jeśli
+	\begin{equation}
+		\left(\forall x_1, x_2 \in X\right)\left(d_X(x_1, x_2) = d_Y(f(x_1), f(x_2))\right).
+	\end{equation}
+\end{definicja}
+\begin{wniosek}
+	Każda izometria jest homeomorfizmem na obraz, ale nie każdy homomorfizm jest izometrią.
+\end{wniosek}
+\begin{twierdzenie}
+	Jeśli $(X, d_X)$ i $(Y, d_Y)$ są homeomorficzne, to
+	\begin{equation}
+		X \text{ jest ośrodkowa} \quad \iff \quad Y \text{ jest ośrodkowa}.
+	\end{equation}
+	Mówimy, że \emph{ośrodkowość jest niezmiennikiem homeomorfizmu}.
+\end{twierdzenie}
+\section{Równoważność metryk}
+\begin{definicja}
+	Metryki $d_1$, $d_2$ na $X$ nazywamy \emph{równoważnymi}, jeśli zadają takie same topologie (patrz definicja \ref{topologia}).
+\end{definicja}
+\begin{twierdzenie}
+	$\circlearrowleft$:
+	\begin{enumerate}
+		\item Metryki $d_1$, $d_2$ są równoważne na $X$.
+		\item Przekształcenie identycznośćowe $\operatorname{id}$ jest homeomorfizmem przestrzeni $(X, d_1)$ oraz $(X, d_2)$.
+		\item $\left(\forall x \in X\right)\left(\forall (x_n) \in X^\mathbb{N}\right)\left(d_1(x, x_n) \overset{n \to \infty}{\longrightarrow} 0 \iff d_2(x, x_n) \overset{n \to \infty}{\longrightarrow} 0\right)$
+		\item Spełnione są oba warunki:
+		\begin{enumerate}
+			\item $\left(\forall x \in X\right)\left(\forall \varepsilon > 0\right)\left(\exists \delta > 0\right)\left(K_1(x, \delta) \subseteq K_2(x, \varepsilon)\right)$
+			\item $\left(\forall x \in X\right)\left(\forall \varepsilon > 0\right)\left(\exists \delta > 0\right)\left(K_2(x, \delta) \subseteq K_1(x, \varepsilon)\right)$.
+		\end{enumerate}
+	\end{enumerate}
+\end{twierdzenie}
+\begin{definicja}
+	Metryki $d_1$ i $d_2$ są \emph{jednostajnie równoważne}, gdy istnieją stałe $c_1, c_2 > 0$ takie że
+	\begin{equation}
+		\left(\forall x, y \in X\right)\left(c_1 d_1(x, y) \leq d_2(x, y) \leq c_2 d_1(x,y)\right).
+	\end{equation}
+\end{definicja}
+\section{Przestrzenie zupełne}
+\begin{definicja}
+	Ciąg $(X_n)$ nazywamy \emph {ciągiem Cauchy'ego}, albo \emph{ciągiem podstawowym}, jeśli spełnia warunek Cauchy'ego:
+	\begin{equation}
+		\left(\forall \varepsilon > 0\right)\left(\exists n_0 \in \mathbb{N}\right)\left(\forall m, n \geq n_0\right)\left(d(x_n, x_m) < \varepsilon\right).
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Każdy ciąg zbieżny jest ciągiem Cauchy'ego.
+\end{twierdzenie}
+\begin{definicja}
+	Przestrzeń metryczną $(X, d)$ nazywamy \emph{zupełną}, jeśli każdy ciąg Cauchy'ego jest zbieżny.
+\end{definicja}
+\begin{twierdzenie}
+	Niech $(X, d)$ będzie przestrzenią metryczną zupełną. Niech $A \subseteq X$. Wtedy
+	\begin{equation}
+		(A, d_{\restriction A\times A}) \text{ jest przestrzenią zupełną} \quad \iff \quad A \text{ jest zbiorem domkniętym w X}.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}[Cantor] \label{cantor}
+	Niech $(X, d)$ będzie przestrzenią metryczną zupełną, oraz ciąg $(F_n)$ podzbiorów domkniętych w $X$ spełnia
+	\begin{equation}
+		% Można by napisać, że F_n to łańcuch i że F_1 jest największy, ale to trochę inny dział i może nir być oczywiste o co chodzi.
+		F_1 \supseteq F_2 \supseteq F_3 \supseteq F_4 \supseteq \ldots \quad \land \quad \lim_{n \to \infty} \diam F_n = 0.
+	\end{equation}
+	Wtedy
+	\begin{equation}
+		\bigcap_{n \in \mathbb{N}} F_n \neq \emptyset.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}[odwrotne do twierdzenia Cantora \ref{cantor}]
+	Niech $(X, d)$ będzie przestrzenią metryczną. Jeśli każdy ciąg zbiorów domkniętych $(F_n)$ spełniający
+	\begin{equation}
+		% Można by napisać, że F_n to łańcuch i że F_1 jest największy, ale to trochę inny dział i może nir być oczywiste o co chodzi.
+		F_1 \supseteq F_2 \supseteq F_3 \supseteq F_4 \supseteq \ldots \quad \land \quad \lim_{n \to \infty} \diam F_n = 0,
+	\end{equation}
+	spełnia także
+	\begin{equation}
+		\bigcap_{n \in \mathbb{N}} F_n \neq \emptyset,
+	\end{equation}
+	to $(X, d)$ jest przestrzenią zupełną.
+\end{twierdzenie}
+\begin{definicja}
+	Niech $(X, d)$ \ppauza przestrzeń metryczna, oraz $T \colon X \to X$.
+	Punkt $x \in X$ nazywamy \emph{punktem stałym} przekształcenia $T$, jeśli $T(x) = x$.
+\end{definicja}
+\begin{definicja}
+	Przekształcenie $T \colon X \to X$ nazywamy \emph{przekształceniem zawężającym} (lub \emph{zbliżającym}, \emph{kontrakcją}) jeśli istnieje stała $C \in (0, 1)$ taka że
+	\begin{equation}
+		\left(\forall x, y \in X\right)\left(d(T(x), T(y)) \leq C \cdot d(x, y)\right).
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}[Banach]
+	Jeżeli  $(X, d)$ jest przestrzenią zupełną, a $T \colon X \to X$ jest odwzorowaniem zawężającym, to $T$ ma dokładnie jeden punkt stały.
+\end{twierdzenie}
+\begin{wniosek}[z dowodu powyższego]
+	Jeżeli  $(X, d)$ jest przestrzenią zupełną, a $T \colon X \to X$ jest odwzorowaniem zawężającym, to każdy ciąg postaci
+	\begin{equation}
+		\begin{cases}
+			x_0 \in X \quad \text{(dowolny)}\\
+			x_{n+1} = T(x_n)
+		\end{cases}
+	\end{equation}
+	jest zbieżny do jedynego punktu stałego $T$.
+\end{wniosek}
+\begin{uwaga}
+	Homeomorfizm nie zachowuje zupełności. Izometrie zachowują zupełność.
+\end{uwaga}
+\section{Przestrzenie zwarte}
+\begin{definicja}
+	Przestrzeń metryczna $(X, d)$ jest \emph{zwarta}, gdy każdy ciąg zawiera podciąg zbieżny.
+\end{definicja}
+\begin{definicja}
+	Podzbiór $K \subseteq X$ nazywamy \emph{zwartym}, jeśli podprzestrzeń $(K, d_{\restriction K \times K})$ jest zwarta. Inaczej: $K$ jest zwarty, jeżeli każdy ciąg elementów z $K$, ma podciąg zbieżny do pewnego elementu z $K$.
+\end{definicja}
+\begin{twierdzenie}
+	Każdy zbiór zwarty jest domknięty i ograniczony.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Każdy domknięty podzbiór przestrzeni zwartej jest zwarty.
+\end{twierdzenie}
+\begin{twierdzenie}
+	W przestrzeniach $\mathbb{R}^n$ z metrykami równoważnymi metryce Euklidesowej,
+	\begin{equation}
+		\text{zbiór } K \text{ jest zwarty} \quad \iff \quad \text{zbiór } K \text{ jest domkniety i ograniczony}.
+	\end{equation}
+\end{twierdzenie}
+\end{document}
+
+
+
+
+
