@@ -419,6 +419,53 @@
 		\text{zbiór } K \text{ jest zwarty} \quad \iff \quad \text{zbiór } K \text{ jest domkniety i ograniczony}.
 	\end{equation}
 \end{twierdzenie}
+\begin{twierdzenie}
+	Każda przestrzeń zwarta jest zupełna.
+\end{twierdzenie}
+\begin{twierdzenie}[Tichonow \ppauza krótka wersja]
+	Niech $(X, d_X)$, $(Y, d_Y)$ będą zwarte. Przestrzeń $(X \times Y, \rho)$ jest zwarta, jeśli za $\rho$ przyjmiemy na przykład jedną z możliwości podanych poniżej:
+	\begin{align}
+		\rho((x_1, y_1), (x_2, y_2)) &= \sqrt{{d_X(x_1, x_2)}^2 + {d_Y(y_1, y_2)}^2}, \\
+		\rho((x_1, y_1), (x_2, y_2)) &= \max\left\{{d_X(x_1, x_2), d_Y(y_1, y_2)}\right\}, \\
+		\rho((x_1, y_1), (x_2, y_2)) &= d_X(x_1, x_2) + {d_Y(y_1, y_2)}.
+	\end{align}
+	Generalnie $\rho$ możemy wybrać dowolnie tak, by spełnione było
+	\begin{equation}
+		\lim_{n \to \infty} \rho((x_n, y_n), (x, y)) = 0 \qquad \iff \qquad \lim_{n \to \infty} d_X(x_n, x) = 0 \quad\land\quad \lim_{n \to \infty} d_Y(y_n, y) = 0.
+	\end{equation}
+\end{twierdzenie}
+\begin{uwaga}
+	Indukcyjnie możemy stwierdzić, że produkt skończenie wielu przestrzeni zwartych jest przestrzenią zwartą. Wnioskujemy, że każda kostka w $\mathbb{R}^n$, czyli zbiór postaci
+	\begin{equation}
+		[a_1, b_1] \times [a_2, b_2] \times [a_3, b_3] \times \ldots \times [a_n, b_n]
+	\end{equation}
+	jest zwarty.
+\end{uwaga}
+\begin{definicja}
+	\emph{Pokryciem otwartym} przestrzeni $X$ nazywamy rodzinę $\mathcal{U}$ otwartych podzbiorów $X$ taką, że
+	\begin{equation}
+		\bigcup \mathcal{U} = X.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}[Borel \ppauza Lebesgue]
+	Przestrzeń $X$ jest zwarta wtedy i tylko wtedy, gdy każde pokrycie otwarte zawiera podpokrycie skończone.
+\end{twierdzenie}
+\begin{uwaga}
+	Drugi warunek nosi nazwę warunku Borela\dywiz Lebesgue'a.
+\end{uwaga}
+\section{Funkcje ciągłe na przestrzeniach zwartych}
+\begin{twierdzenie}[Weierstrass]
+	Niech $X$ będzie przestrzenią zwartą. Wtedy każda funkcja ciągła $f\colon X \to \mathbb{R}$ jest ograniczona i przyjmuje swoje kresy.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Niech $X$ będzie przestrzenią zwartą. Wtedy każda funkcja ciągła $f\colon X \to \mathbb{R}$ jest jednostajnie ciągła.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Niech $X$ będzie przestrzenią zwartą, a $f\colon X \to Y$ funkcją ciągłą. Wtedy $f[X]$ jest zwarty w $Y$. Ogólniej, obraz zbioru zwartego przez funkcję ciągła jest zwarty.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Niech $X$ będzie przestrzenią zwartą, a $f\colon X \to Y$ funkcją ciągłą i odwracalną. Wtedy $f^{-1}$ jest także ciągła, czyli $f$ jest homeomorfizmem na obraz.
+\end{twierdzenie}
 \end{document}
 
 
