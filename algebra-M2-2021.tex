@@ -8,11 +8,13 @@
 
 \usepackage{enumitem}
 \usepackage{amsmath, amsfonts, amssymb, mathtools, amsthm}
+\usepackage{icomma}
 \mathtoolsset{showonlyrefs}
 
 \DeclareMathOperator{\Ima}{Im}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Lin}{Lin}
+\newcommand*{\im}{\mathrm{I}}
 
 \theoremstyle{definition}
 \newtheorem{definicja}{Def}[section]
@@ -115,7 +117,7 @@
 	jest bazą przestrzeni $L(V, W)$.
 \end{twierdzenie}
 \begin{definicja}
-	Niech $T \in L(V, W)$, $A = \left\{v_1, v_2, \ldots, v_n\right\}$ \ppauza baza przestrzeni $V$, $B = \left\{w_1, w_2, \ldots, w_m\right\}$ \ppauza baza przestrzeni $W$. Wtedy dla każdego indeksu $i$ zachodzi
+	Niech $T \in L(V, W)$, $A = \left\{v_1, v_2, \ldots, v_n\right\}, B = \left\{w_1, w_2, \ldots, w_m\right\}$ \ppauza bazy przestrzeni $V$ i $W$ odpowiednio. Wtedy dla każdego indeksu $i$ zachodzi
 	\begin{equation}
 		T(v_i) = \sum_{j = 1}^m t_{ji}w_j
 	\end{equation}
@@ -243,22 +245,22 @@ Macierze przejścia i przekształcenia zapisujemy często w uproszczonej notacji
 \begin{definicja}
 	Wielomian
 	\begin{equation}
-		W(\lambda) = \det (A - \lambda I)
+		W(\lambda) = \det (A - \lambda \im)
 	\end{equation}
 	nazywamy \emph{wielomianem charakterystycznym} macierzy $A$. Równanie postaci
 	\begin{equation}
-		\det (A - \lambda I) = 0
+		\det (A - \lambda \im) = 0
 	\end{equation}
 	nazywamy \emph{równaniem charakterystycznym}.
 \end{definicja}
 \begin{twierdzenie}
 	Wartości własne macierzy $A$, to pierwiastki równania charakterystycznego
 	\begin{equation}
-		\det (A - \lambda I) = 0.
+		\det (A - \lambda \im) = 0.
 	\end{equation}
 	Przestrzeń własna odpowiadająca wartości własnej $\lambda$ jest przestrzenią rozwiązań układu jednorodnego
 	\begin{equation}
-		(A - \lambda I) \cdot v = \vec 0.
+		(A - \lambda \im) \cdot v = \vec 0.
 	\end{equation}
 \end{twierdzenie}
 \begin{twierdzenie} % z ćwiczeń
@@ -270,7 +272,7 @@ Macierze przejścia i przekształcenia zapisujemy często w uproszczonej notacji
 	\begin{equation}
 		F:V \times V \to \mathbb{R}
 	\end{equation}
-	nazywamy \emph{iloczynem skalarnym} jeśli dla dowolnych $u, v, w \in \mathbb{R}$ oraz $\lambda \in \mathbb{R}$ spełnia następujące warunki:
+	nazywamy \emph{iloczynem skalarnym} jeśli dla dowolnych $u, v, w \in \mathbb{R}$ oraz $\lambda \in V$ spełnia następujące warunki:
 	\begin{enumerate}
 		\item $F(u, v) = F(v, u)$ \quad (symetria),
 		\item $F(\lambda u, v) = \lambda F(u, v)$ \quad (jednorodność ze względu na pierwszy argument),
@@ -411,14 +413,375 @@ Macierze przejścia i przekształcenia zapisujemy często w uproszczonej notacji
 		V = W \oplus W^\perp.
 	\end{equation}
 \end{twierdzenie}
+\begin{twierdzenie}
+	Niech $V$ \ppauza przestrzeń Euklidesowa oraz niech $W \leq V$. Wtedy
+	\begin{equation}
+		{(W^\perp)}^\perp = W.
+	\end{equation}
+\end{twierdzenie}
 Pamiętamy jakie były cyrki, kiedy pisaliśmy że baza przestrzeni jest zbiorem, ale kolejność jest ważna? Okazuje się, że jest pojęcie którego powinniśmy byli wtedy używać.
 \begin{definicja}
 	\emph{Układem wektorów} z przestrzeni liniowej $V$ nazywamy ciąg wektorów
 	\begin{equation}
 		\left(v_1, v_2, \ldots\right),
 	\end{equation}
-	gdzie $v_i \in V$. Chodzi o to, że kolejność ma znaczenie, ale często potrzebujemy odnosić się do niego jako zbioru.
+	gdzie $v_i \in V$. Może być skończony. Chodzi o to, że kolejność ma znaczenie, ale często potrzebujemy odnosić się do niego jako zbioru.
 \end{definicja}
+\begin{definicja}
+	Niech $V$ będzie $n$\ppauza wymiarową przestrzenią Euklidesową rzeczywistą i niech $B = (v_1, v_2, \ldots v_n)$ \ppauza układ wektorów a przestrzeni $V$. Macierz postaci
+	\begin{equation}
+		G(v_1, v_2, \dots, v_n) = \begin{bmatrix}
+			\left<v_1, v_1\right> & \left<v_1, v_2\right> & \ldots & \left<v_1, v_n\right> \\
+			\left<v_2, v_1\right> & \left<v_2, v_2\right> & \ldots & \left<v_2, v_n\right> \\
+			\vdots & \vdots & & \vdots \\
+			\left<v_i, v_1\right> & \left<v_i, v_2\right> & \ldots & \left<v_i, v_n\right> \\
+			\vdots & \vdots & \ddots & \vdots \\
+			\left<v_n, v_1\right> & \left<v_n, v_2\right> & \ldots & \left<v_n, v_n\right> \\
+		\end{bmatrix}
+	\end{equation}
+	Nazywamy \emph{Macierzą Grama}. Wyznacznik tej macierzy nazywamy \emph{wyznacznikiem Grama}, i oznaczamy
+	\begin{equation}
+		\Gamma(v_1, v_2, \ldots, v_n) = \det G(v_1, v_2, \dots, v_n).
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Jeśli układ $(w_1, w_2, \ldots, w_n)$ jest otrzymany w procesie ortogonalizacji Grama\ppauza Schmidta z układu $(v_1, v_2, \ldots, v_n)$, to
+	\begin{equation}
+		\Gamma(v_1, v_2, \ldots, v_n) = \Gamma(w_1, w_2, \ldots, w_n) = \prod_{i = 1}^n \|w_i\|
+	\end{equation}
+\end{twierdzenie}
+\begin{wniosek}
+	Dla dowolnego układu wektorów $(v_1, v_2, \ldots, v_n)$ w przestrzeni Euklidesowej rzeczywistej zachodzą:
+	\begin{enumerate}
+		\item $\Gamma(v_1, v_2, \ldots, v_n) \geq 0$,
+		\item $\Gamma(v_1, v_2, \ldots, v_n) = 0 \quad \iff \quad$ układ $(v_1, v_2, \ldots, v_n)$ jest liniowo zależny.
+	\end{enumerate}
+	Badanie wyznacznika macierzy Grama stanowi więc (nie zawsze wygodny) sposób na badanie liniowej niezależności.
+\end{wniosek}
+\begin{definicja}
+	\emph{Iloczynem skalarnym} w przestrzeni liniowej $V$ nad ciałem $\mathbb{C}$ nazywamy funkcję $F\colon V\times V \to \mathbb{C}$ spełniającą dla dowolnych $u, v, w \in V$ oraz $\lambda \in \mathbb{C}$ następujące warunki:
+	\begin{enumerate}
+		\item $F(\lambda u, v) = \lambda F(u, v)$ \quad (jednorodność ze względu na pierwszy argument),
+		\item $F(u + v, w) = F(u, w) + F(v, w)$ \quad (addytywność ze względu na pierwszy argument),
+		\item $F(u, v) = \overline{F(v, u)}$ \quad (symetria sprzężona),
+		\item $F(v, v) \in [0, \infty)\subseteq\mathbb{R} $\quad (dodatnia określoność),
+		\item $F(v, v) = 0 \iff v = \vec 0$.
+		\end{enumerate}
+\end{definicja}
+Różnica pomiędzy iloczynem skalarnym rzeczywistym a~zespolonym polega na tym, że jeden jest formą dwuliniową a~drugi \ppauza półtoraliniową.
+\begin{definicja}
+	\emph{Formą półtoraliniową} nazywamy funkcję $F\colon V\times V\to \mathbb{C}$ spełniającą dla dowolnych wektorów $u, v, w\in V$ oraz skalara $\alpha\in\mathbb{C}$ następujące warunki:
+	\begin{enumerate}
+		\item $F(u+v, w) = F(u, w) + F(v, w)$,
+		\item $F(u, v+w) = F(u, v) + f(u, w)$,
+		\item $F(\alpha v, w) = \alpha F(v, w)$,
+		\item $F(v, \alpha w) = \overline\alpha F(v, w)$.
+	\end{enumerate}
+\end{definicja}
+Uwaga: dla iloczynu skalarnego zespolonego także działa Ortogonalizacja Grama\ppauza Schmidta, a~także twierdzenie o wyznaczniku Grama.
+\section{Formy dwuliniowe i kwadratowe}
+\begin{definicja}
+	\emph{Funkcjonałem liniowym} na przestrzeni liniowej $V$ nad ciałem $\mathbb{K}$ nazywamy funkcję $F\colon V\to \mathbb{K}$ taką, że
+	\begin{equation}
+		F(\alpha x + y) = \alpha F(x) + F(y)
+	\end{equation}
+	dla dowolnych $x, y \in V$ oraz $\alpha \in \mathbb{K}$. W~skrócie: $F \in L(V, \mathbb{K})$.
+\end{definicja}
+\begin{definicja}
+	Przestrzeń liniową $L(V, \mathbb{K})$ oznaczamy $V^*$ i~nazywamy \emph{przestrzenią dualną} (dual space) do $V$.
+\end{definicja}
+\begin{definicja}
+	\emph{Funkcjonałem dwuliniowym} nazywamy funkcję $F\colon V\times V\to \mathbb{K}$ spełniającą dla dowolnych $u, v, w \in V$ oraz $\alpha \in \mathbb{K}$ następujące warunki:
+	\begin{enumerate}
+		\item $F(\alpha v + w, u) = \alpha F(v, u) + F(w, u)$,
+		\item $F(u, \alpha v + w) = \alpha F(u, v) + F(u, w)$.
+	\end{enumerate}
+	Zbiór funkcjonałów dwuliniowych na przestrzeni $V$ oznaczamy $L(V\times V, \mathbb{K})$. Stanowi to pewien konflikt oznaczeń, ale nie mówimy o tym.
+\end{definicja}
+\begin{twierdzenie}
+	Niech $V$ będzie przestrzenią liniową nad ciałem $\mathbb{K}$, $B=\left\{e_1, e_2, \ldots, e_n\right\}$ jest bazą $V$ oraz $F$ jest funkcjonałem dwuliniowym. Jeśli $v, w \in V$ oraz
+	\begin{equation}
+		v = \sum_{i = 1}^{n} v_i e_i, \quad w = \sum_{i = 1}^{n} w_i e_i,
+	\end{equation}
+	to zachodzi
+	\begin{equation}
+		F(v, w) = \sum_{i, j = 1}^{n} a_{i, j}v_iw_j
+	\end{equation}
+	gdzie $a_{i, j} = F(e_i, e_j)$.
+\end{twierdzenie}
+\begin{definicja}
+	Wyrażenie postaci
+	\begin{equation}
+		\sum_{i, j = 1}^{n} a_{i, j}x_iy_j
+	\end{equation}
+	nazywamy \emph{formą dwuliniową}.
+\end{definicja}
+\begin{twierdzenie}
+	Funkcjonały dwuliniowe są sobie równe, wtedy i tylko wtedy gdy mają takie same wartości na bazie na obu współrzędnych, czyli kiedy
+	\begin{equation}
+		F_1(e_i, e_j) = F_2(e_i, e_j).
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	Niech $\dim V = n < \infty$, $F\in L(V\times V, \mathbb{K})$. Macierz
+	\begin{equation}
+		A = {\left[F(e_i, e_j)\right]}_{n \times n} = 
+		\begin{bmatrix}
+			F(e_1, e_1) & F(e_1, e_2) & \cdots & F(e_1, e_n) \\
+			F(e_2, e_1) & F(e_2, e_2) & \cdots & F(e_2, e_n) \\
+			\vdots & \vdots & \ddots & \vdots \\
+			F(e_n, e_1) & F(e_n, e_2) & \cdots & F(e_n, e_n)
+		\end{bmatrix}
+	\end{equation}
+	nazywamy \emph{macierzą funkcjonału $F$ w~bazie $B$}.
+\end{definicja}
+\begin{twierdzenie}
+	Istnieje bijekcja między zbiorami $L(V\times V, \mathbb{K})$, $M_n(\mathbb{K})$, gdzie $n = \dim V < \infty$. %Prawdopodobnie możemy mówić o~izomorfizmie przestrzeni liniowych, ale twierdzenie mówi tylko o~bijekcji.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $F \in L(V\times V, \mathbb{K})$ gdzie $\dim V = n < \infty$ ma w bazie $B$ macierz $M$, a~w~bazie $B'$ macierz $M'$, to
+	\begin{equation}
+		M' = P^TMP
+	\end{equation}
+	gdzie $P$ jest macierzą przejścia z~bazy $B$ do $B'$.
+\end{twierdzenie}
+\begin{definicja}
+	Forma dwuliniowa nazywa się \emph{symetryczną}, jeśli
+	\begin{equation}
+		\left(\forall v, w\in V\right) F(v, w) = F(w, v).
+	\end{equation}
+\end{definicja}
+\begin{definicja}
+	\emph{Rzędem formy dwuliniowej} nazywamy rząd macierzy tej formy w~dowolnej bazie. Jest to wartość niezależna od wyboru bazy.
+\end{definicja}
+\begin{definicja}
+	\emph{Wyróżnikiem formy dwuliniowej} nazywamy wyznacznik macierzy tej formy w zadanej bazie. Ta wartość jest zależna od bazy.
+\end{definicja}
+\begin{definicja}
+	Niech $F \in L(V\times V, \mathbb{K})$ będzie funkcjonałem dwuliniowym symetrycznym. Wtedy funkcja $G\colon V\to \mathbb{K}$ określona wzorem
+	\begin{equation}
+		G(v) = F(v, v)
+	\end{equation}
+	nazywa się \emph{funkcjonałem kwadratowym} na przestrzeni $V$. O~funkcjonale $F$ mówimy, że \emph{generuje} on funkcjonał kwadratowy $G$.
+\end{definicja}
+\begin{wniosek}
+	$F$ i $G$ wyznaczają się nawzajem jednoznacznie.
+\end{wniosek}
+\begin{definicja}
+	Jeżeli $B = \left\{e_1, e_2, \ldots, e_n\right\}$ \ppauza wybrana baza $V$, gdzie $\dim V = n < \infty$ i $G$ jest funkcjonałem kwadratowym na $V$ to
+	\begin{equation}
+		G\left(\sum_{i = 1}^n x_ie_i\right) = F\left(\sum_{i = 1}^n x_ie_i, \sum_{j = 1}^n x_je_j\right) = \sum_{i, j = 1}^n x_ix_jF\left(e_i, e_j\right) = \sum_{i, j = 1}^n x_ix_ja_{i, j}
+	\end{equation}
+	gdzie $a_{i, j} = F\left(e_i, e_j\right)$. Prawa strona równości nazywa się \emph{formą kwadratową}, natomiast macierz $A = [a_{i, j}]$ nazywa się \emph{macierzą} tej formy (taka sama jak macierz formy dwuliniowej $F$) w bazie $B$.
+\end{definicja}
+\begin{definicja}
+	\emph{Rzędem formy kwadratowej} nazywamy rząd macierzy tej formy.
+\end{definicja}
+\begin{twierdzenie}
+	Rząd formy kwadratowej nie zależy od wyboru bazy.
+\end{twierdzenie}
+\begin{definicja}
+	Mówimy, że funkcjonał kwadratowy $G$ na w bazie $B$ \emph{postać kanoniczną} jeżeli macierz formy jest w tej bazie diagonalna. Wtedy baza $B$ nazywa się \emph{bazą kanoniczną} formy $G$. Mamy więc, że $G$ ma w bazie kanonicznej postać diagonalną, czyli
+	\begin{equation}
+		G(x) = \sum_{i = 1}^{n} a_{i, i}{x_i}^2
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Niech $G$ będzie funkcjonałem kwadratowym określonym na przestrzeni liniowej $V$ nad ciałem $\mathbb{R}$ lub $\mathbb{C}$, gdzie $\dim V = n < \infty$. Wówczas istnieje baza $V$ która jest bazą kanoniczną funkcjonału $G$.
+\end{twierdzenie}
+% no i tu jest konstruktywny dowód, który jest jednocześnie metodą sprowadzania do postaci kanonicznej. Ale jst długi :)
+\begin{twierdzenie}
+	Niech $B = \left\{v_1, v_2, \ldots, v_n\right\}, B' = \left\{v_1', v_2', \ldots, v_n'\right\}$ będą bazami w przestrzeni $n$\ppauza wymiarowej $V$. Jeśli
+	\begin{equation}
+		v_i' = \sum_{i = 1}^n p_{j, i}v_j,
+	\end{equation}
+	czyli $P = [p_{i, j}]$ jest macierzą przejścia z bazy $B$ do $B'$, to
+	\begin{equation}
+		x_i = \sum_{i = 1}^n p_{i, j}x_j',
+	\end{equation}
+	czyli współrzędne wyrażają się przez współrzędne nowe za pomocą macierzy $P$.
+\end{twierdzenie}
+\begin{wniosek}
+	Wektory bazy przekształcają się wzdłuż kolumn, a współrzędne wektorów przekształcają się wzdłuż wierszy.
+\end{wniosek}
+\begin{twierdzenie}[prawo bezwładności form kwadratowych Sylvestera]
+	Niech $\dim V = n < \infty$, gdzie $V$ jest przestrzenią liniową nad $\mathbb{R}$. Niech $B, B'$ \ppauza\ bazy kanoniczne funkcjonału kwadratowego $F$. Wtedy liczba współczynników dodatnich jest taka sama w obu bazach, podobnie liczba współczynników ujemnych.
+\end{twierdzenie}
+\begin{definicja}
+	Forma kwadratowa nazywa się \emph{dodatnio określoną}, jeżeli wszystkie współczynniki w~postaci kanonicznej są dodatnie. Analogicznie definiujemy \emph{ujemną określoność, niedodatnią określoność} oraz \emph{nieujemną określoność}.
+\end{definicja}
+\begin{definicja}
+	Forma kwadratową nazywamy \emph{określoną}, jeśli wszystkie współczynniki diagonalne w~postaci kanonicznej są niezerowe i~mają ten sam znak.
+\end{definicja}
+\begin{definicja}
+	\emph{Sygnaturą} formy kwadratowej nazywamy parę $(p, q)$, gdzie $p$ jest liczbą współczynników dodatnich, a $q$ ujemnych w~twierdzeniu Sylvestera. Jak już wiemy, jest w~każdej bazie kanonicznej taka sama.
+\end{definicja}
+\begin{twierdzenie}
+	Forma kwadratowa $F$ jest dodatnio określona wtedy i tylko wtedy, gdy
+	\begin{equation}
+		\left(\forall v\in V\setminus\left\{\vec 0\right\}\right) F(v) > 0.
+	\end{equation}
+	Jest nieujemnie określona, wtedy i tylko wtedy gdy
+	\begin{equation}
+		\left(\forall v\in V\right) F(v) \geq 0.
+	\end{equation}
+	Analogicznie dla ujemnej określoności i niedodatniej określoności.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Oznaczmy przez $\Delta_k$ wyznacznik minora $k\times k$ macierzy A, zawierającego pierwsza komórkę. Forma kwadratowa $F$ jest dodatnio określona wtedy i tylko wtedy gdy
+	\begin{equation}
+		\left(\forall i \in [n] \right) \Delta_i > 0.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Niech $F$ będzie rzeczywistą formą kwadratową postaci
+	\begin{equation}
+		F(v) = \sum_{i, j = 1}^{n} a_{i, j}x_ix_j
+	\end{equation}
+	i niech $\Delta_i$ będą wyznacznikami jak przedtem. Jeśli są one wszystkie niezerowe, to istnieje baza w której forma $F(v)$ przyjmuje postać
+	\begin{equation}
+		F(v) = \frac{\Delta_0}{\Delta_1}{y_1}^2 + \frac{\Delta_1}{\Delta_2}{y_2}^2 + \ldots + \frac{\Delta_{n-1}}{\Delta_n}{y_n}^2.
+	\end{equation}
+	gdzie $\Delta_0 = 1$.
+\end{twierdzenie}
+\begin{definicja}
+	\emph{Formą hermitowską} na przestrzeni $V$ nad $\mathbb{C}$ nazywamy formę półtoraliniową spełniającą dla dowolnych $v, w \in V$
+	\begin{equation}
+		F(v, w) = \overline {F(w, v)}.
+	\end{equation}
+	Przykładem takiej funkcji dla $V = {\mathbb{C}}^n$ jest
+	\begin{equation}
+		F(v, w) = \sum_{i = 1}^n x_i\overline{y_i}.
+	\end{equation}
+\end{definicja}
+Uwaga: ogólną postacią formy półtoraliniowej jest
+\begin{equation}
+	F(v, w) = \sum_{i, j = 1}^n a_{i, j}x_i\overline{y_j}.
+\end{equation}
+Jeśli forma jest hermitowska, to ta także powyższą postać, przy czym zachodzi warunek $a_{i, j} = \overline a_{j, i}$.
+\begin{twierdzenie}
+	W przestrzeni liniowej z~iloczynem skalarnym nad $\mathbb{C}$ istnieje baza kanoniczna formy kwadratowej hermitowskiej, to jest forma otrzymana z formy hermitowskiej $F\colon V\times V\to \mathbb{C}$ przez $\widetilde{F}(v) = F(v, v)$ ma postać kanoniczną (diagonalną).
+	\begin{equation}
+		\widetilde F(v) = \sum_{i = 1}^n a_{i, i}{|x_i|}^2, \quad \text{gdzie ${|x_i|}^2 = x_i\overline{x_i}$.}
+	\end{equation}
+\end{twierdzenie}
+\section{Przestrzenie z iloczynem skalarnym}
+\begin{definicja}
+	Niech $\dim V = n < \infty$, oraz $B = \left\{e_1, e_2, \ldots, e_n\right\}$ \ppauza baza $V$. Zbiór $B^* = \left\{e^1, e^2, \ldots, e^n\right\}$ gdzie $e_i\colon V\to\mathbb{K}$ jest przekształceniem liniowym zdefiniowanym na bazie $B$ jako
+	\begin{equation}
+		e^j(e_k) = \delta_{j, k},
+	\end{equation}
+	nazywamy \emph{bazą dualną} do bazy $B$.
+\end{definicja}
+\begin{twierdzenie}
+	Baza dualna jest bazą w $V^*$.
+\end{twierdzenie}
+\begin{definicja}
+	Niech $V^*$ \ppauza przestrzeń dualna do $V$, gdzie $V$ jest przestrzenią unitarną lub Euklidesową. Dla każdego wektora $v\in V$ definiujemy funkcjonał $\Phi_v \in L(V, \mathbb{K}) = V^*$ przez
+	\begin{equation}
+		\Phi_v(w) = \left<w, v\right>.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Niech $V$ będzie przestrzenią liniową z iloczynem skalarnym o~wymiarze $n < \infty$. Wtedy odwzorowanie $\Phi\colon V\to V^*$ zadane wzorem
+	\begin{equation}
+		\Phi(v) = \Phi_v
+	\end{equation}
+	jest izomorfizmem przestrzeni $V$ oraz $V^*$.
+\end{twierdzenie}
+\begin{definicja}
+	Rzeczywistą macierz kwadratową $A \in M_n(\mathbb{R})$ nazywamy \emph{macierzą ortogonalną} jeżeli spełnia ana warunek
+	\begin{equation}
+		AA^T = \im.
+	\end{equation}
+	Uwaga: jeśli $A$ jest ortogonalna, to jest odwracalna i $A^T = A^{-1}$. Ponadto, $\det A = \pm 1$.
+\end{definicja}
+\begin{twierdzenie}
+	Macierz przejścia z~bazy ortonormalnej do bazy ortonormalnej jest macierzą ortogonalną. Każda macierz ortogonalna jest macierzą przejścia z pewnej bazy ortonormalnej do pewnej bazy ortonormalnej.
+\end{twierdzenie}
+\begin{definicja}
+	Przestrzeń liniową nad ciałem $\mathbb{C}$ z (zespolonym) iloczynem skalarnym nazywamy \emph{przestrzenią unitarną}.
+\end{definicja}
+\section{Przekształcenia liniowe w przestrzeniach unitarnych}
+Okazuje się, że większość twierdzeń które mieliśmy dla przestrzeni Euklidesowych zachodzi też dla przestrzeni unitarnych. W~szczególności:
+\begin{enumerate}
+	\item w przestrzeni unitarnej istnieje norma indukowana przez iloczyn skalarny
+	\begin{equation}
+		\|x\| = \sqrt{\left<x, x\right>},
+	\end{equation}
+	\item zachodzi nierówność Cauchy'ego\ppauza Schwartza
+	\begin{equation}
+		\|x+y\| \leq \|x\| + \|y\|,
+	\end{equation}
+	\item każdy zbiór wektorów ortogonalnych można uzupełnić do bazy ortogonalnej,
+	\item dla dowolnej podprzestrzeni $W\leq V$ zachodzi rozkład
+	\begin{equation}
+		V = W \oplus W^\perp.
+	\end{equation}
+\end{enumerate}
+\begin{twierdzenie}
+	Niech $B = \left\{e_1, e_2, \ldots, e_n\right\}$ \ppauza baza ortonormalna w~przestrzeni unitarnej $V$ oraz $\dim V = n < \infty$. Wtedy dla dowolnych $x, y\in V$ zachodzą wzory:
+	\begin{align}
+		x &= \sum_{i = 1}^n \left<x, e_i\right>e_i,\\
+		\left<x, y\right> &= \sum_{i = 1}^n \left<x, e_i\right>\left<e_i, y\right>, \\
+		{\|x\|}^2 &= \sum_{i = 1}^n {|\left<x, e_i\right>|}^2.
+	\end{align}
+\end{twierdzenie}
+\begin{definicja}
+	Jeżeli $A\in M_n(\mathbb{C})$, to \emph{macierzą sprzężoną} do macierzy $A$ nazywamy macierz
+	\begin{equation}
+		A^* = {\overline A}^T,
+	\end{equation}
+	czyli $[a_{i, j}]^* = [\overline{a_{j, i}}]$.
+\end{definicja}
+\begin{definicja}
+	Macierz $U\in M_n(\mathbb{C})$ nazywamy \emph{macierzą unitarną}, jeśli spełnia
+	\begin{equation}
+		U^*U = \im.
+	\end{equation}
+	Uwaga: każda macierz unitarna jest nieosobliwa i $U^{-1} = U^*$. Ponadto $|\det U | = 1$.
+\end{definicja}
+\begin{twierdzenie}
+	Macierz przejścia z~bazy ortonormalnej do bazy ortonormalnej w~przestrzeni unitarnej jest macierzą unitarną. Każda macierz unitarna jest macierzą przejścia z~pewnej bazy ortonormalnej do pewnej bazy ortonormalnej.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Kilka prostych własności macierzy unitarnych:
+	\begin{enumerate}
+		\item macierz unitarna o współczynnikach rzeczywistych jest ortogonalna, tzn. $U^TU = \im$,
+		\item ${\left(A^*\right)}^* = A$,
+		\item ${\left(AB\right)}^* = B^*A^*$,
+		\item iloczyn macierzy unitarnych jest unitarny,
+		\item macierz odwrotna do macierzy unitarnej jest unitarna.
+	\end{enumerate}
+\end{twierdzenie}
+\begin{definicja}
+	Niech będzie dane przekształcenie liniowe $T \in L(V)$, gdzie $V$ jest przestrzenią unitarną. Wtedy możemy zdefiniować formę półtoraliniową $F_T\colon V\times V\to \mathbb{C}$ wzorem
+	\begin{equation}
+		F_T(x, y) = \left<Tx, y\right>.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Odwzorowanie $\psi\colon L(V)\to L(V\times V)$ zadane wzorem
+	\begin{equation}
+		\psi(T) = F_T
+	\end{equation}
+	jest bijekcją.
+\end{twierdzenie}
+% Moglibyśmy powiedzieć, że izomorfizmem, jeśli postrzegalibyśmy zbiór przekształceń dwuliniowych $L(V\times V)$ jako przestrzeń liniową?
+\begin{twierdzenie}
+	Jeżeli macierz formy półtoraliniowej $F$ na przestrzeni unitarnej $V$, gdzie $\dim V = n <\infty$ w~bazie ortonormalnej $B$ ma macierz $M(F)$, to macierz przekształcenia $F_T$ wyznaczonego przez formę $F$ wzorem $F(x, y) = \left<T_F x, y\right>$ jest równa ${M(F)}^T$. %coooo
+\end{twierdzenie}
+% TODO: fix that shiet above to be readable
+\begin{definicja}
+	Niech $T\in L(V)$. Wtedy przekształcenie $T^*\in L(V)$ zdefiniowane wzorem
+	\begin{equation}
+		\left<Tx, y\right> = \left<x, T^*y\right>
+	\end{equation}
+	nazywamy \emph{przekształceniem sprzężonym} do $T$.
+\end{definicja}
+\begin{twierdzenie}
+	Przekształcenie $T^*$ jest dobrze zdefiniowane i~jeżeli $A$ jest macierzą przekształcenia $T$ w~bazie $B$, to $A^*$ jest macierzą przekształcenia $T^*$ w~tej bazie.
+\end{twierdzenie}
 \end{document}
 
 

@@ -14,6 +14,7 @@
 \newcommand{\cc}{\mathsf{c}}
 \DeclareMathOperator{\cl}{cl}
 \DeclareMathOperator{\intr}{int}
+\DeclareMathOperator{\sgn}{sgn}
 
 \theoremstyle{definition}
 \newtheorem{definicja}{Def}[section]
@@ -22,6 +23,7 @@
 \theoremstyle{remark}
 \newtheorem{wniosek}{Wniosek}[section]
 \newtheorem*{uwaga}{Uwaga}
+\newtheorem{zadanie}{Zd}[section]
 
 %strona tytułowa
 \author{skryba Łukasz Pawlak}
@@ -40,6 +42,34 @@
 	\end{enumerate}
 	Parę $(X, d)$ nazywamy \emph{przestrzenią metryczną}.
 \end{definicja}
+\begin{zadanie}
+	\emph{Następujące funkcje są metrykami:}
+	\begin{enumerate}
+		\item metryka maksimum w $\mathbb{R}^2$: $d_\infty((x_1, y_1), (x_2, y_2)) = \max \left\{|x_1 - x_2|, |y_1 - y_2|\right\}$,
+		\item metryka ,,mur'' w $\mathbb{R}$: $d(x, y) = |x - y| + |\sgn x - \sgn y|$,
+		\item metryka w $[0, 1)$ dana wzorem $d(x, y) = \min \left\{|x - y|, 1 - |x - y| \right\}$.
+	\end{enumerate}
+\end{zadanie}
+\begin{zadanie}
+	Niech $d_2$ oznacza metrykę Euklidesową w $\mathbb{R}^2$, czyli
+	\begin{equation}
+		d_2((x_1, y_1), (x_2, y_2)) = \sqrt{{(x_1 - x_2)}^2 + {(y_1 - y_2)}^2}.
+	\end{equation}
+	Metrykę ,,węzeł kolejowy'' (lub ,,centrum'') w $\mathbb{R}^2$ definiuje się wzorem
+	\begin{equation}
+		% TODO: zapytać na zajęciach z TI jak to wyrównać porządnie
+		d(x, y) = \begin{cases}
+			% d_2(x, y) & \parbox{15em}{gdy $x$ i $y$ leżą na wspólnej prostej przechodzącej przez $(0, 0)$} \\
+			d_2(x, y) & \text{gdy $x$ i $y$ leżą na wspólnej prostej} \\
+			& \text{przechodzącej przez $(0, 0)$} \\
+			d_2(x, (0, 0)) + d_2((0, 0), y) & \text{w przeciwnym razie}
+		\end{cases}
+	\end{equation}
+	\emph{Jest to rzeczywiście metryka.}
+\end{zadanie}
+\begin{zadanie}
+	content
+\end{zadanie}
 %Warto znać kilka metryk na $\mathbb{R}^2$:
 %\begin{enumerate}
 %	\item metryka taksówkowa dana wzorem $d_1((x, y), (x', y')) = |x - x'| + |y - y'|$
