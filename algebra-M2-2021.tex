@@ -14,7 +14,13 @@
 \DeclareMathOperator{\Ima}{Im}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Lin}{Lin}
+
 \newcommand*{\im}{\mathrm{I}}
+\newcommand*{\iu}{\mathrm{i}}
+\newcommand*{\e}{\mathrm{e}}
+
+\usepackage{bbold}
+%\DeclareMathAlphabet{\mathbbold}{U}{bbold}{m}{n}
 
 \theoremstyle{definition}
 \newtheorem{definicja}{Def}[section]
@@ -769,9 +775,13 @@ Okazuje się, że większość twierdzeń które mieliśmy dla przestrzeni Eukli
 \end{twierdzenie}
 % Moglibyśmy powiedzieć, że izomorfizmem, jeśli postrzegalibyśmy zbiór przekształceń dwuliniowych $L(V\times V)$ jako przestrzeń liniową?
 \begin{twierdzenie}
-	Jeżeli macierz formy półtoraliniowej $F$ na przestrzeni unitarnej $V$, gdzie $\dim V = n <\infty$ w~bazie ortonormalnej $B$ ma macierz $M(F)$, to macierz przekształcenia $F_T$ wyznaczonego przez formę $F$ wzorem $F(x, y) = \left<T_F x, y\right>$ jest równa ${M(F)}^T$. %coooo
+	% uwaga: mogłem coś z tym twierdzeniem zepsuć, bo przepisywałem je poźniej bez notatek
+	Niech dana będzie $n$\dywiz wymiarowa przestrzeń unitarna $V$, gdzie $n$ jest skończone. Ustalmy formę półtoraliniową $F$ na tej przestrzeni.
+	Jeżeli macierz formy $F$ w~bazie ortonormalnej $B$ to $M(F)$, to macierz przekształcenia $T_F$, wyznaczonego przez formę $F$ za pomocą wzoru
+	\begin{equation}
+		F(x, y) = \left<T_F x, y\right>
+	\end{equation} jest równa ${M(F)}^T$.
 \end{twierdzenie}
-% TODO: fix that shiet above to be readable
 \begin{definicja}
 	Niech $T\in L(V)$. Wtedy przekształcenie $T^*\in L(V)$ zdefiniowane wzorem
 	\begin{equation}
@@ -782,6 +792,136 @@ Okazuje się, że większość twierdzeń które mieliśmy dla przestrzeni Eukli
 \begin{twierdzenie}
 	Przekształcenie $T^*$ jest dobrze zdefiniowane i~jeżeli $A$ jest macierzą przekształcenia $T$ w~bazie $B$, to $A^*$ jest macierzą przekształcenia $T^*$ w~tej bazie.
 \end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $V$ jest przestrzenią unitarną oraz $T\in L(V)$ to
+	\begin{equation}
+		{(T^*)}^* = T
+	\end{equation}
+\end{twierdzenie}
+\begin{definicja}
+	Przekształcenie liniowe $T\in L(V)$ w przestrzeni unitarnej $V$ jest \emph{hermitowskie}, lub \emph{samosprzężone} jeżeli zachodzi
+	\begin{equation}
+		T = T^*.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Wartości własne przekształcenia hermitowskiego są rzeczywiste.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Każde przekształcenie liniowe w~przestrzeni unitarnej można zapisać w~postaci
+	\begin{equation}
+		T = T_1 + \iu T_2,
+	\end{equation}
+	gdzie $T_1, T_2$ są hermitowskie.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Przekształcenie $U\in L(V)$ na przestrzeni unitarnej $V$ nazywamy \emph{unitarnym}, gdy
+	\begin{equation}
+		UU^* = U^*U = \mathrm{Id}.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Macierz przekształcenia unitarnego w~każdej bazie ortonormalnej jest macierzą unitarną.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Macierz przekształcenia hermitowskiego w~każdej bazie ortonormalnej jest macierzą hermitowską.
+\end{twierdzenie}
+\begin{twierdzenie}
+	każde przekształcenie liniowe na przestrzeni unitarnej skończenie wymiarowej można przedstawić jako iloczyn przekształcenia hermitowskiego i~unitarnego.
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $U$ jest przekształceniem unitarnym, to jego wartości własne mają moduł równy $1$, czyli są postaci
+	\begin{equation}
+		\e^{\iu\varphi}, \quad \text{dla } \varphi \in \mathbb{R}.
+	\end{equation}
+\end{twierdzenie}
+\begin{twierdzenie}
+	Jeśli $U$ jest przekształceniem unitarnym, to
+	\begin{equation}
+		\left(\forall x, y \in V\right) \left<Ux, Uy\right> = \left<x, y\right>,
+	\end{equation}
+	czyli $U$ zachowuje iloczyn skalarny w~przestrzeni unitarnej. Jeżeli przekształcenie $U$ zachowuje iloczyn skalarny w~przestrzeni unitarnej, to jest to przekształcenie unitarne (warunki są równoważne, nawet czasem jako definicję przyjmuje się to twierdzenie).
+\end{twierdzenie}
+\begin{twierdzenie}
+	Niech $T$ będzie przekształceniem hermitowskim w~unitarnej przestrzeni skończenie wymiarowej $V$. Jeśli $x$ jest wektorem własnym $T$, to przestrzeń wektorów ortogonalnych $W = {(\Lin(x))}^\perp$ jest podprzestrzenią niezmiennicza przestrzeni $V$ względem $T$.
+\end{twierdzenie}
+\begin{twierdzenie}[Diagonalizowalność przekształceń hermitowskich]
+	Niech $T$ będzie przekształceniem hermitowskim w~unitarnej przestrzeni $n$\dywiz wymiarowej $V$. Wtedy istnieje $n$  parami ortogonalnych wektorów własnych tego przekształcenia, którym odpowiadają rzeczywiste wartości własne.
+\end{twierdzenie}
+\begin{definicja}
+	Przekształcenie liniowe $T$ w~przestrzeni unitarnej nazywamy \emph{normalnym}, gdy
+	\begin{equation}
+		TT^* = T^*T.
+	\end{equation}
+\end{definicja}
+\begin{twierdzenie}
+	Każde przekształcenie normalne (a~zatem także unitarne oraz hermitowskie) jest diagonalizowalne.
+\end{twierdzenie}
+\section{Postać kanoniczna Jordana}
+\begin{definicja}
+	\emph{Klatką Jordana} nazywamy macierz postaci
+	\begin{equation}
+		K = \begin{bmatrix}
+			\lambda & 1 & 0 & 0 & \cdots & 0 & 0 \\
+			0 & \lambda & 1 & 0 & \cdots & 0 & 0 \\
+			0 & 0 & \lambda & 1 & \cdots & 0 & 0 \\
+			0 & 0 & 0 & \lambda & \cdots & 0 & 0 \\
+			\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			0 & 0 & 0 & 0 & \cdots & \lambda & 1 \\
+			0 & 0 & 0 & 0 & \cdots & 0 & \lambda \\
+		\end{bmatrix},
+	\end{equation}
+	czyli macierz, która ma na diagonali takie same wartości $\lambda$, ponad diagonalą same jedynki (dokładniej: komórka w $k$\dywiz tym wierszu i $(k+1)$\dywiz tej kolumnie jest jedynką) oraz zera w~pozostałych komórkach.
+\end{definicja}
+Kilka przykładów klatek Jordana:
+\begin{gather}
+	\begin{bmatrix}
+		5
+	\end{bmatrix},\quad
+	\begin{bmatrix}
+		-1 & \phantom{-}1 \\
+		\phantom{-}0 & -1
+	\end{bmatrix},\quad
+	\begin{bmatrix}
+		2 & 1 & 0 \\
+		0 & 2 & 1 \\
+		0 & 0 & 2
+	\end{bmatrix},\quad
+	\begin{bmatrix}
+		3 & 1 & 0 & 0 \\
+		0 & 3 & 1 & 0 \\
+		0 & 0 & 3 & 1 \\
+		0 & 0 & 0 & 3
+	\end{bmatrix}.
+\end{gather}
+\begin{twierdzenie}
+	Jeżeli $A \in M_n(\mathbb{C})$, to istnieje macierz nieosobliwa $P$, taka że
+	\begin{equation}
+		P^{-1}AP = \begin{bmatrix}
+			K_1 & \mathbb{0} & \mathbb{0} & \cdots & \mathbb{0} \\
+			\mathbb{0} & K_2 & \mathbb{0} & \cdots & \mathbb{0} \\
+			\mathbb{0} & \mathbb{0} & K_3 & \cdots & \mathbb{0} \\
+			\vdots & \vdots & \vdots & \ddots & \vdots \\
+			\mathbb{0} & \mathbb{0} & \mathbb{0} & \cdots & K_m \\
+		\end{bmatrix},
+	\end{equation}
+	gdzie $K_j$ są klatkami Jordana. Mogą, ale nie muszą mieć one różnych stałych $\lambda$ oraz mogę mieć różne wymiary. W~szczególności, jeśli wszystkie są wymiaru $1\times 1$, to $A$ jest diagonalizowalna.
+\end{twierdzenie}
+\begin{definicja}
+	Przyjmujemy oznaczenie
+	\begin{equation}
+		N_\lambda^{(n)} = \Ker{\left(T-\lambda\mathrm{Id}\right)}^n.
+	\end{equation}
+	Elementy zbioru
+	\begin{equation}
+		N_\lambda^{(n+1)} \setminus N_\lambda^{(n)}
+	\end{equation}
+	nazywamy \emph{wektorami dołączonymi} rzędu $n$, dla $n\geq 1$.
+\end{definicja}
+\begin{definicja}
+	Zbiór wektorów $\left\{v_1, v_2, \ldots v_n\right\}$ jest \emph{liniowo niezależny względem $N_\lambda^{(n)}$}, jeśli żadna kombinacja liniowa wektorów $v_1, v_2, \ldots, v_n$ nie należy do $N_\lambda^{(n)}$. \\W~skrócie: $\Lin\left(\left\{v_1, v_2, \ldots v_n\right\}\right) \cap N_\lambda^{(n)} = \{\vec 0\}$.
+\end{definicja}
+Aby sprowadzić macierz do postaci kanonicznej Jordana, najpierw znajdujemy wartości własne i~wektory własne. Jeśli mamy $n$ liniowo niezależnych wektorów własnych, to zadanie jest sprowadzone do diagonalizacji. Jeśli krotność geometryczna danej wartości własnej $\lambda$ (liczba liniowo niezależnych wektorów własnych jej odpowiadających) wynosi $k$, to powstanie $k$ klatek Jordana związanych z tą wartością własną. Będziemy szukać \emph{bazy kanonicznej Jordana}. Dokładnie $m$ wektorów tej bazy będzie pochodzić od wartości własnej $\lambda$, gdzie $m$ jest krotnością algebraiczną $\lambda$. Wektory te będą wektorami własnymi odpowiadającymi $\lambda$, oraz wektorami do nich dołączonymi, przy czym dla każdego $s$ zbiór przez nas wybranych wektorów dołączonych stopni od $s$ do $m$ ma być liniowo niezależny względem $N_\lambda^{(s)}$. Wówczas dla wektorów dołączonych stopnia najwyższego, kolejne (stopnia o~jeden mniej) możemy wyliczać przez przemnożenie przez macierz $T-\lambda\im$. Może się zdarzyć, że będziemy mieli kilka wektorów dołączonych danego rzędu. Będą one tworzyły swego rodzaju nitki. Wektory z~jednej nitki odpowiadają jednej klatce Jordana (więc w~ostatecznej bazie muszą być obok siebie). Kolejność także ma znaczenie: dla danej nitki w~ostatecznej bazie wypiszemy znalezione wektory w~kolejności od najmniejszego stopnia (odwrotnie, niż zostały wyznaczone).
 \end{document}
 
 
